@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Content</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="template : ${templates}">
+        <td>
+            <a th:href="@{/template/{name}(name=${template.name})}" th:text="${template.name}"></a>
+        </td>
+        <td th:text="${template.content}"></td>
+        <td>
+            <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

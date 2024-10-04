@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Postback Builder</title>
+    <title>Templates</title>
 </head>
 <body>
-<label>
-    <hi>MCANISM ScriptBuilder</hi>
-    <br>
-    <br>
-    cid:
-    <input type="text" name="cid" placeholder="cid" required/>
-    <br>
-    eid:
-    <input type="text" name="eid" placeholder="eid" required/>
-    <br>
-    id variable:
-    <input type="text" name="id" placeholder="id" required/>
-    <br>
-    amount variable:
-    <input type="text" name="amount" placeholder="amount" required/>
-    <br>
-    <br>
 
+<h1>Select a Template</h1>
 
+<form th:action="@{/template/generate}" method="post">
+    <label for="templateSelect">Choose a template:</label>
+    <select id="templateSelect" name="selectedTemplate">
+        <option th:each="template : ${templates}"
+                th:value="${template.name}"
+                th:text="${template.name}"></option>
+    </select>
 
-</label>
-<br>
-<input type="submit" value="Submit"/>
+    <div>
+        <label for="eid">EID:</label>
+        <input type="text" id="eid" name="eid" th:value="${eid}" required/>
+    </div>
+    <div>
+        <label for="cid">CID:</label>
+        <input type="text" id="cid" name="cid" th:value="${cid}" required/>
+    </div>
+    <div>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount"/>
+    </div>
+    <div>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required/>
+    </div>
 
+    <button type="submit">Generate</button>
+</form>
+
+<div>
+    <h2>Generated Content:</h2>
+    <textarea rows="10" cols="50" th:text="${generatedContent}" readonly></textarea>
+</div>
 
 </body>
 </html>
