@@ -4,19 +4,6 @@
     <meta charset="UTF-8">
     <title>Template Form</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script>
-        // Warnung anzeigen, wenn ein Fehler vorhanden ist
-        function showWarning(message) {
-            alert(message);
-        }
-
-        window.onload = function() {
-            let errorMessage = /*[[${error}]]*/ '';
-            if (errorMessage !== '') {
-                showWarning(errorMessage);
-            }
-        }
-    </script>
 </head>
 <body class="bg-light">
 
@@ -39,6 +26,14 @@
         <div class="form-group">
             <label for="installContent">Install Content:</label>
             <textarea id="installContent" name="installContent" th:text="${template.installContent}" required class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="amountPlaceholder">Amount:</label>
+            <input type="text" id="amountPlaceholder" name="amountPlaceholder" th:text="${template.amountPlaceholder}" class="form-control"></input>
+        </div>
+        <div class="form-group">
+            <label for="idPlaceholder">ID:</label>
+            <input type="text"  id="idPlaceholder" name="idPlaceholder" th:text="${template.idPlaceholder}" class="form-control"></input>
         </div>
 
         <button type="submit" class="btn btn-primary">Save Template</button>

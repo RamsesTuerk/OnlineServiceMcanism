@@ -17,6 +17,8 @@
             <th>Sale Content</th>
             <th>Lead Content</th>
             <th>Install Content</th>
+            <th>Amount Placeholder</th>
+            <th>ID Placeholder</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -28,6 +30,8 @@
             <td th:text="${template.saleContent}"></td>
             <td th:text="${template.leadContent}"></td>
             <td th:text="${template.installContent}"></td>
+            <td th:text="${template.amountPlaceholder}"></td> <!-- Amount Placeholder -->
+            <td th:text="${template.idPlaceholder}"></td> <!-- ID Placeholder -->
             <td>
                 <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -35,6 +39,7 @@
             </td>
         </tr>
         </tbody>
+
     </table>
 </div>
 

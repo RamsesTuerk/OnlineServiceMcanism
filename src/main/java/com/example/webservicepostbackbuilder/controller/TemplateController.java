@@ -52,15 +52,6 @@ public class TemplateController {
     @PostMapping("/template/save")
     public String saveTemplate(@ModelAttribute Template template, Model model) {
 
-        for(Template existingTemplate : templateService.getAllTemplates()) {
-            if (existingTemplate != null && !existingTemplate.getName().equals(template.getName())) {
-                // If a template with the same name exists and it's not the one being edited, show error
-                model.addAttribute("template", template);
-                model.addAttribute("error", "A template with the name '" + template.getName() + "' already exists.");
-                return "templateForm"; // Return to the form with the error
-            }
-        }
-
         templateService.saveTemplate(template);
         return "redirect:/templates"; // Redirect to the list after successful save
     }
@@ -69,6 +60,10 @@ public class TemplateController {
     @GetMapping("/templates")
     public String listTemplates(Model model) {
         List<Template> templates = templateService.getAllTemplates();
+        for(Template test : templates){
+            System.out.println(test.getAmountPlaceholder());
+            System.out.println(test.getIdPlaceholder());
+        }
         model.addAttribute("templates", templates);
         return "templateList";
     }
