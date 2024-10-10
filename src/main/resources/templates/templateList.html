@@ -6,20 +6,26 @@
 </head>
 <body>
 
+<h1>Template List</h1>
+
 <table>
     <thead>
     <tr>
         <th>Name</th>
-        <th>Content</th>
+        <th>Sale Content</th>
+        <th>Lead Content</th>
+        <th>Install Content</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="template : ${templates}">
         <td>
-            <a th:href="@{/template/{name}(name=${template.name})}" th:text="${template.name}"></a>
+            <a th:href="@{/template/edit/{name}(name=${template.name})}" th:text="${template.name}"></a>
         </td>
-        <td th:text="${template.content}"></td>
+        <td th:text="${template.saleContent}"></td>
+        <td th:text="${template.leadContent}"></td>
+        <td th:text="${template.installContent}"></td>
         <td>
             <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
                 <button type="submit">Delete</button>

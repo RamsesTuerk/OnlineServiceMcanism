@@ -36,12 +36,6 @@ public class TemplateController {
         return "templateForm";
     }
 
-    @PostMapping("/template")
-    public String saveTemplate(@ModelAttribute Template template) {
-        templateService.saveTemplate(template);
-        return "redirect:/templates";
-    }
-
     @GetMapping("/templates")
     public String listTemplates(Model model) {
         List<Template> templates = templateService.getAllTemplates();
@@ -53,7 +47,7 @@ public class TemplateController {
     public String viewTemplate(@PathVariable String name, Model model) {
         Template template = templateService.getTemplate(name);
         model.addAttribute("name", template.getName());
-        model.addAttribute("content", template.getContent());
+        model.addAttribute("content", template.getSaleContent());
         return "templateView";
     }
 
@@ -65,6 +59,7 @@ public class TemplateController {
     @PostMapping("/template/generate")
     public String generateContent(
             @RequestParam String selectedTemplate,
+            @RequestParam String contentType,
             @RequestParam String eid,
             @RequestParam String cid,
             @RequestParam(required = false) String amount,
@@ -72,15 +67,31 @@ public class TemplateController {
             Model model) {
 
         System.out.println("Selected Template: " + selectedTemplate);
+        System.out.println("Content Type: " + contentType);
 
         // Fetch the selected template
         Template template = templateService.getTemplate(selectedTemplate);
         if (template == null) {
             System.out.println("Template not found! Available templates:");
             templateService.getAllTemplates().forEach(t -> System.out.println(" - " + t.getName()));
+            return "redirect:/"; // Redirect or show an error if the template is not found
         }
 
-        String content = template != null ? template.getContent() : "";
+        // Determine which content to use based on the selected type
+        String content = "";
+        switch (contentType) {
+            case "sale":
+                content = template.getSaleContent();
+                break;
+            case "lead":
+                content = template.getLeadContent();
+                break;
+            case "install":
+                content = template.getInstallContent();
+                break;
+            default:
+                break;
+        }
 
         // Replace placeholders with actual values
         content = content.replace("{eid}", eid)
@@ -89,10 +100,26 @@ public class TemplateController {
                 .replace("{id}", id);
 
         // Log generated content
-        System.out.println("Generated Content: " + content); // Log the generated content
+        System.out.println("Generated Content: " + content);
         model.addAttribute("generatedContent", content);
         model.addAttribute("templates", templateService.getAllTemplates()); // To repopulate the dropdown
 
         return "PostbackBuilder"; // Ensure this is the correct Thymeleaf template name
+    }
+
+    @GetMapping("/template/edit/{name}")
+    public String editTemplate(@PathVariable String name, Model model) {
+        Template template = templateService.getTemplate(name);
+        if (template == null) {
+            return "redirect:/templates"; // Falls das Template nicht existiert, umleiten
+        }
+        model.addAttribute("template", template); // Fülle das Formular mit den Template-Daten
+        return "templateForm"; // Zeige das Formular zur Bearbeitung an
+    }
+
+    @PostMapping("/template/save")
+    public String saveTemplate(@ModelAttribute Template template) {
+        templateService.saveTemplate(template); // Template wird gespeichert, egal ob neu oder aktualisiert
+        return "redirect:/templates"; // Zurück zur Liste
     }
 }

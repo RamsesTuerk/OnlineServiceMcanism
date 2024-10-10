@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Templates</title>
+    <title>Postback Builder</title>
 </head>
 <body>
 
@@ -15,6 +15,15 @@
                 th:value="${template.name}"
                 th:text="${template.name}"></option>
     </select>
+    <br>
+
+    <label for="contentType">Content Type:</label>
+    <select id="contentType" name="contentType">
+        <option value="sale">Sale</option>
+        <option value="lead">Lead</option>
+        <option value="install">Install</option>
+    </select>
+    <br>
 
     <div>
         <label for="eid">EID:</label>

@@ -2,17 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Order</title>
+    <title>Template Form</title>
 </head>
 <body>
 
-<form action="#" th:action="@{/template}" th:object="${template}" method="post">
-    <label for="name">Template Name</label>
-    <input type="text" id="name" th:field="*{name}">
-    <br>
+<h1 th:text="${template.name != null} ? 'Edit Template' : 'Create Template'"></h1>
 
-    <label for="content">Content</label>
-    <textarea id="content" th:field="*{content}"></textarea>
+<form th:action="@{/template/save}" th:object="${template}" method="post">
+    <div>
+        <label for="name">Template Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required/>
+    </div>
+
+    <div>
+        <label for="saleContent">Sale Content:</label>
+        <textarea id="saleContent" name="saleContent" th:field="*{saleContent}"></textarea>
+    </div>
+
+    <div>
+        <label for="leadContent">Lead Content:</label>
+        <textarea id="leadContent" name="leadContent" th:field="*{leadContent}"></textarea>
+    </div>
+
+    <div>
+        <label for="installContent">Install Content:</label>
+        <textarea id="installContent" name="installContent" th:field="*{installContent}"></textarea>
+    </div>
 
     <button type="submit">Save</button>
 </form>
