@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Template Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Warnung anzeigen, wenn ein Fehler vorhanden ist
+        function showWarning(message) {
+            alert(message);
+        }
+
+        window.onload = function() {
+            let errorMessage = /*[[${error}]]*/ '';
+            if (errorMessage !== '') {
+                showWarning(errorMessage);
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-light">
 
-<h1 th:text="${template.name != null} ? 'Edit Template' : 'Create Template'"></h1>
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Create or Edit Template</h1>
 
-<form th:action="@{/template/save}" th:object="${template}" method="post">
-    <div>
-        <label for="name">Template Name:</label>
-        <input type="text" id="name" name="name" th:field="*{name}" required/>
-    </div>
+    <form th:action="@{/template/save}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="name">Template Name:</label>
+            <input type="text" id="name" name="name" th:value="${template.name}" required class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="saleContent">Sale Content:</label>
+            <textarea id="saleContent" name="saleContent" th:text="${template.saleContent}" required class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="leadContent">Lead Content:</label>
+            <textarea id="leadContent" name="leadContent" th:text="${template.leadContent}" required class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="installContent">Install Content:</label>
+            <textarea id="installContent" name="installContent" th:text="${template.installContent}" required class="form-control"></textarea>
+        </div>
 
-    <div>
-        <label for="saleContent">Sale Content:</label>
-        <textarea id="saleContent" name="saleContent" th:field="*{saleContent}"></textarea>
-    </div>
-
-    <div>
-        <label for="leadContent">Lead Content:</label>
-        <textarea id="leadContent" name="leadContent" th:field="*{leadContent}"></textarea>
-    </div>
-
-    <div>
-        <label for="installContent">Install Content:</label>
-        <textarea id="installContent" name="installContent" th:field="*{installContent}"></textarea>
-    </div>
-
-    <button type="submit">Save</button>
-</form>
+        <button type="submit" class="btn btn-primary">Save Template</button>
+    </form>
+</div>
 
 </body>
 </html>

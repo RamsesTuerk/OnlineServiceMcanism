@@ -19,6 +19,7 @@ public class TemplateController {
         this.templateService = templateService;
     }
 
+    // Homepage with list of templates and optional EID and CID
     @GetMapping("/")
     public String index(@RequestParam(required = false) String eid,
                         @RequestParam(required = false) String cid,
@@ -26,16 +27,45 @@ public class TemplateController {
         model.addAttribute("templates", templateService.getAllTemplates());
         model.addAttribute("eid", eid != null ? eid : "");
         model.addAttribute("cid", cid != null ? cid : "");
-        return "PostbackBuilder"; // Ensure this is the correct view name
+        return "PostbackBuilder";
     }
 
-
+    // Form for creating or editing a template
     @GetMapping("/template")
     public String showTemplateForm(Model model) {
         model.addAttribute("template", new Template());
         return "templateForm";
     }
 
+    // Form for editing an existing template by its name
+    @GetMapping("/template/edit/{name}")
+    public String editTemplate(@PathVariable String name, Model model) {
+        Template template = templateService.getTemplate(name);
+        if (template == null) {
+            return "redirect:/templates";
+        }
+        model.addAttribute("template", template); // Populate form with the existing template data
+        return "templateForm";
+    }
+
+    // Save a new or edited template
+    @PostMapping("/template/save")
+    public String saveTemplate(@ModelAttribute Template template, Model model) {
+
+        for(Template existingTemplate : templateService.getAllTemplates()) {
+            if (existingTemplate != null && !existingTemplate.getName().equals(template.getName())) {
+                // If a template with the same name exists and it's not the one being edited, show error
+                model.addAttribute("template", template);
+                model.addAttribute("error", "A template with the name '" + template.getName() + "' already exists.");
+                return "templateForm"; // Return to the form with the error
+            }
+        }
+
+        templateService.saveTemplate(template);
+        return "redirect:/templates"; // Redirect to the list after successful save
+    }
+
+    // List all templates
     @GetMapping("/templates")
     public String listTemplates(Model model) {
         List<Template> templates = templateService.getAllTemplates();
@@ -43,6 +73,7 @@ public class TemplateController {
         return "templateList";
     }
 
+    // View a specific template by its name
     @GetMapping("/template/{name}")
     public String viewTemplate(@PathVariable String name, Model model) {
         Template template = templateService.getTemplate(name);
@@ -51,11 +82,14 @@ public class TemplateController {
         return "templateView";
     }
 
+    // Delete a template by its name
     @PostMapping("/template/delete/{name}")
     public String deleteTemplate(@PathVariable String name) {
         templateService.deleteTemplate(name);
         return "redirect:/templates";
     }
+
+    // Generate content based on selected template and content type
     @PostMapping("/template/generate")
     public String generateContent(
             @RequestParam String selectedTemplate,
@@ -74,10 +108,10 @@ public class TemplateController {
         if (template == null) {
             System.out.println("Template not found! Available templates:");
             templateService.getAllTemplates().forEach(t -> System.out.println(" - " + t.getName()));
-            return "redirect:/"; // Redirect or show an error if the template is not found
+            return "redirect:/";
         }
 
-        // Determine which content to use based on the selected type
+        // Choose content based on content type (sale, lead, or install)
         String content = "";
         switch (contentType) {
             case "sale":
@@ -99,27 +133,11 @@ public class TemplateController {
                 .replace("{amount}", amount != null ? amount : "")
                 .replace("{id}", id);
 
-        // Log generated content
+        // Log and display the generated content
         System.out.println("Generated Content: " + content);
         model.addAttribute("generatedContent", content);
-        model.addAttribute("templates", templateService.getAllTemplates()); // To repopulate the dropdown
+        model.addAttribute("templates", templateService.getAllTemplates()); // Repopulate the dropdown
 
-        return "PostbackBuilder"; // Ensure this is the correct Thymeleaf template name
-    }
-
-    @GetMapping("/template/edit/{name}")
-    public String editTemplate(@PathVariable String name, Model model) {
-        Template template = templateService.getTemplate(name);
-        if (template == null) {
-            return "redirect:/templates"; // Falls das Template nicht existiert, umleiten
-        }
-        model.addAttribute("template", template); // Fülle das Formular mit den Template-Daten
-        return "templateForm"; // Zeige das Formular zur Bearbeitung an
-    }
-
-    @PostMapping("/template/save")
-    public String saveTemplate(@ModelAttribute Template template) {
-        templateService.saveTemplate(template); // Template wird gespeichert, egal ob neu oder aktualisiert
-        return "redirect:/templates"; // Zurück zur Liste
+        return "PostbackBuilder";
     }
 }

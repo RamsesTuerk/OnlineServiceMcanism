@@ -1,39 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Templates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-light">
 
-<h1>Template List</h1>
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Template List</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Sale Content</th>
-        <th>Lead Content</th>
-        <th>Install Content</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="template : ${templates}">
-        <td>
-            <a th:href="@{/template/edit/{name}(name=${template.name})}" th:text="${template.name}"></a>
-        </td>
-        <td th:text="${template.saleContent}"></td>
-        <td th:text="${template.leadContent}"></td>
-        <td th:text="${template.installContent}"></td>
-        <td>
-            <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered mt-4">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Sale Content</th>
+            <th>Lead Content</th>
+            <th>Install Content</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="template : ${templates}">
+            <td>
+                <a th:href="@{/template/edit/{name}(name=${template.name})}" th:text="${template.name}"></a>
+            </td>
+            <td th:text="${template.saleContent}"></td>
+            <td th:text="${template.leadContent}"></td>
+            <td th:text="${template.installContent}"></td>
+            <td>
+                <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
