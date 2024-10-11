@@ -1,7 +1,7 @@
 package com.example.webservicepostbackbuilder.repository;
 
 public class Template {
-    private String key;
+
     private String name;
     private String saleContent;
     private String leadContent;
@@ -18,24 +18,15 @@ public class Template {
         this.installContent = installContent;
         this.amountPlaceholder = amountPlaceholder;
         this.idPlaceholder = idPlaceholder;
-        this.key = name;
     }
 
-    // Getter und Setter
+    // Getters and setters
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getSaleContent() {

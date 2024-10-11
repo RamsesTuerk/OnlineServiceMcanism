@@ -22,9 +22,7 @@ public class TemplateService {
     }
 
     public Template getTemplate(String name) {
-        Template template = templateRepository.findByName(name);
-        System.out.println("Retrieved Template: " + (template != null ? template.getName() : "Not Found"));
-        return template;
+        return templateRepository.findByName(name);
     }
 
     public List<Template> getAllTemplates() {

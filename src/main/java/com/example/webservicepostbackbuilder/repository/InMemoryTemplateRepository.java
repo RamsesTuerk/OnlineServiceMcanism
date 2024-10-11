@@ -15,9 +15,7 @@ public class InMemoryTemplateRepository implements TemplateRepository {
     @Override
     public void save(Template template) {
         templateStore.put(template.getName(), template);
-        System.out.println("Saved Template: " + template.getName() + ", Sale: " + template.getSaleContent() + ", Lead: " + template.getLeadContent() + ", Install: " + template.getLeadContent());
     }
-
 
     @Override
     public Template findByName(String name) {
