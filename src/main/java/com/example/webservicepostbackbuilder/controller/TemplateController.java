@@ -3,9 +3,21 @@ package com.example.webservicepostbackbuilder.controller;
 import com.example.webservicepostbackbuilder.repository.Template;
 import com.example.webservicepostbackbuilder.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class TemplateController {
@@ -34,6 +46,22 @@ public class TemplateController {
         model.addAttribute("template", new Template());
         return "templateForm";
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        Path path = Paths.get("src/main/resources/static/images/" + fileName);
+
+        try {
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            Map<String, String> response = new HashMap<>();
+            response.put("fileName", fileName);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 
     // Edit an existing template by its name
     @GetMapping("/template/edit/{name}")
@@ -77,36 +105,27 @@ public class TemplateController {
 
     // Generate content based on selected template and content type
     @PostMapping("/template/generate")
-    public String generateContent(@RequestParam String selectedTemplate,
-                                  @RequestParam String contentType,
+    public String generateContent(@RequestParam String content,
                                   @RequestParam String eid,
                                   @RequestParam String cid,
-                                  @RequestParam(required = false) String amount,
                                   @RequestParam String id,
+                                  @RequestParam String amount,
                                   Model model) {
 
-        Template template = templateService.getTemplate(selectedTemplate);
-        if (template == null) {
-            return "redirect:/";
-        }
-
-        String content = switch (contentType) {
-            case "sale" -> template.getSaleContent();
-            case "lead" -> template.getLeadContent();
-            case "install" -> template.getInstallContent();
-            default -> "";
-        };
 
         content = content.replace("{eid}", eid)
                 .replace("{cid}", cid)
                 .replace("{amount}", amount != null ? amount : "")
-                .replace("{id}", id);
+                .replace("{id}", id != null ? id : "");
 
         model.addAttribute("generatedContent", content);
-        model.addAttribute("templates", templateService.getAllTemplates());
-
-        return "landingPage";
+        model.addAttribute("eid", eid); // Um EID im Template anzuzeigen
+        model.addAttribute("cid", cid); // Um CID im Template anzuzeigen
+        model.addAttribute("amount", amount); // Für das Amount-Feld
+        model.addAttribute("id", id); // Für das ID-Feld
+        return "templateContent"; // Stelle sicher, dass du die richtige View zurückgibst
     }
+
 
     // Load template-specific content in an Iframe
     @PostMapping("/loadContent")
@@ -124,10 +143,28 @@ public class TemplateController {
             default -> "";
         };
 
+        String amount;
+        String id;
+
+        if(template.getAmountPlaceholder() != null){
+            amount = template.getAmountPlaceholder();
+        }else {
+            amount = "";
+        }
+
+        if(template.getIdPlaceholder() != null){
+            id = template.getIdPlaceholder();
+        }else {
+            id = "";
+        }
+
         // Füge die Werte für eid und cid zum Model hinzu
         model.addAttribute("eid", eid);
         model.addAttribute("cid", cid);
         model.addAttribute("content", content);
+        model.addAttribute("amount", amount);
+        model.addAttribute("id", id);
+        model.addAttribute("selectedTemplate", template.getName());
         model.addAttribute("description", template.getDescription());
 
         return "templateContent"; // Erstelle eine separate Ansicht für den Inhalt
