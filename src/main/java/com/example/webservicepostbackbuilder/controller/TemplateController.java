@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 public class TemplateController {
 
@@ -19,7 +17,7 @@ public class TemplateController {
         this.templateService = templateService;
     }
 
-    // Homepage with list of templates and optional EID and CID
+    // Landing page with list of templates and optional EID and CID
     @GetMapping("/")
     public String index(@RequestParam(required = false) String eid,
                         @RequestParam(required = false) String cid,
@@ -27,7 +25,7 @@ public class TemplateController {
         model.addAttribute("templates", templateService.getAllTemplates());
         model.addAttribute("eid", eid != null ? eid : "");
         model.addAttribute("cid", cid != null ? cid : "");
-        return "PostbackBuilder";
+        return "landingPage";
     }
 
     // Form for creating or editing a template
@@ -79,14 +77,13 @@ public class TemplateController {
 
     // Generate content based on selected template and content type
     @PostMapping("/template/generate")
-    public String generateContent(
-            @RequestParam String selectedTemplate,
-            @RequestParam String contentType,
-            @RequestParam String eid,
-            @RequestParam String cid,
-            @RequestParam(required = false) String amount,
-            @RequestParam String id,
-            Model model) {
+    public String generateContent(@RequestParam String selectedTemplate,
+                                  @RequestParam String contentType,
+                                  @RequestParam String eid,
+                                  @RequestParam String cid,
+                                  @RequestParam(required = false) String amount,
+                                  @RequestParam String id,
+                                  Model model) {
 
         Template template = templateService.getTemplate(selectedTemplate);
         if (template == null) {
@@ -108,6 +105,33 @@ public class TemplateController {
         model.addAttribute("generatedContent", content);
         model.addAttribute("templates", templateService.getAllTemplates());
 
-        return "PostbackBuilder";
+        return "landingPage";
     }
+
+    // Load template-specific content in an Iframe
+    @PostMapping("/loadContent")
+    public String loadContent(@RequestParam String templateName,
+                              @RequestParam String saleType,
+                              @RequestParam(required = false) String eid,
+                              @RequestParam(required = false) String cid,
+                              Model model) {
+        // Hier den Inhalt basierend auf dem Template und Sale Typ abrufen
+        Template template = templateService.getTemplate(templateName);
+        String content = switch (saleType) {
+            case "sale" -> template.getSaleContent();
+            case "lead" -> template.getLeadContent();
+            case "install" -> template.getInstallContent();
+            default -> "";
+        };
+
+        // Füge die Werte für eid und cid zum Model hinzu
+        model.addAttribute("eid", eid);
+        model.addAttribute("cid", cid);
+        model.addAttribute("content", content);
+        model.addAttribute("description", template.getDescription());
+
+        return "templateContent"; // Erstelle eine separate Ansicht für den Inhalt
+    }
+
+
 }

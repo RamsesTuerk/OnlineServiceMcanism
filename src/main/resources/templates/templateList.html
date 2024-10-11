@@ -14,6 +14,7 @@
         <thead class="thead-dark">
         <tr>
             <th>Name</th>
+            <th>Beschreibung</th> <!-- Neue Spalte für die Beschreibung -->
             <th>Sale Content</th>
             <th>Lead Content</th>
             <th>Install Content</th>
@@ -27,11 +28,12 @@
             <td>
                 <a th:href="@{/template/edit/{name}(name=${template.name})}" th:text="${template.name}"></a>
             </td>
+            <td th:text="${template.description}"></td> <!-- Beschreibung hinzufügen -->
             <td th:text="${template.saleContent}"></td>
             <td th:text="${template.leadContent}"></td>
             <td th:text="${template.installContent}"></td>
-            <td th:text="${template.amountPlaceholder}"></td> <!-- Amount Placeholder -->
-            <td th:text="${template.idPlaceholder}"></td> <!-- ID Placeholder -->
+            <td th:text="${template.amountPlaceholder}"></td>
+            <td th:text="${template.idPlaceholder}"></td>
             <td>
                 <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>

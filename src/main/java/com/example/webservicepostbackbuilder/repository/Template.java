@@ -8,6 +8,7 @@ public class Template {
     private String installContent;
     private String amountPlaceholder;
     private String idPlaceholder;
+    private String description;
 
     public Template() {}
 
@@ -67,5 +68,13 @@ public class Template {
 
     public void setIdPlaceholder(String idPlaceholder) {
         this.idPlaceholder = idPlaceholder;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

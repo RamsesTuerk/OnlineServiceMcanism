@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Postback Builder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Template Generator</h1>
+    <form th:action="@{/loadContent}" method="post" target="templateIframe" class="mt-4">
+        <div class="form-group">
+            <label for="templateSelect">Wähle eine Template:</label>
+            <select id="templateSelect" name="templateName" class="form-control">
+                <option th:each="template : ${templates}"
+                        th:value="${template.name}"
+                        th:text="${template.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="saleType">Sale Typ:</label>
+            <select id="saleType" name="saleType" class="form-control">
+                <option value="sale">Sale</option>
+                <option value="lead">Lead</option>
+                <option value="install">Install</option>
+            </select>
+        </div>
+        <input type="hidden" name="eid" th:value="${param.eid}"/>
+        <input type="hidden" name="cid" th:value="${param.cid}"/>
+        <button type="submit" class="btn btn-primary">Anzeigen</button>
+    </form>
+
+    <!-- Iframe to load content based on selection -->
+    <iframe id="templateIframe" name="templateIframe" class="mt-4" width="100%" height="5000px" style="border: none;"></iframe>
+</div>
+</body>
+</html>

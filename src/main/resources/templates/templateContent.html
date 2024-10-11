@@ -1,34 +1,20 @@
 <!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Postback Builder</title>
+    <title>Template Content</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
+<body>
+<div class="container mt-4">
+    <h1>Template Content</h1>
 
-<div class="container mt-5">
-    <h1 class="text-center text-primary">Select a Template</h1>
+    <div class="mt-4">
+        <h2>Description:</h2>
+        <p th:text="${description}"></p> <!-- Hier wird die Beschreibung angezeigt -->
+    </div>
 
     <form th:action="@{/template/generate}" method="post" class="mt-4">
-        <div class="form-group">
-            <label for="templateSelect">Choose a template:</label>
-            <select id="templateSelect" name="selectedTemplate" class="form-control">
-                <option th:each="template : ${templates}"
-                        th:value="${template.name}"
-                        th:text="${template.name}"></option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="contentType">Content Type:</label>
-            <select id="contentType" name="contentType" class="form-control">
-                <option value="sale">Sale</option>
-                <option value="lead">Lead</option>
-                <option value="install">Install</option>
-            </select>
-        </div>
-
         <div class="form-group">
             <label for="eid">EID:</label>
             <input type="text" id="eid" name="eid" th:value="${eid}" required class="form-control"/>
@@ -54,6 +40,5 @@
         <textarea rows="10" cols="50" th:text="${generatedContent}" readonly class="form-control"></textarea>
     </div>
 </div>
-
 </body>
 </html>
