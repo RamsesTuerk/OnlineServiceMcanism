@@ -20,35 +20,34 @@
             <label for="description">Beschreibung</label>
             <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
             <!-- Beschreibung hinzufügen -->
-        </div>
 
-        <div class="form-group">
-            <label for="saleContent">Sale Content</label>
-            <textarea id="saleContent" th:field="*{saleContent}" class="form-control" rows="4" required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="saleContent">Sale Content</label>
+                <textarea id="saleContent" th:field="*{saleContent}" class="form-control" rows="4" required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="leadContent">Lead Content</label>
-            <textarea id="leadContent" th:field="*{leadContent}" class="form-control" rows="4" required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="leadContent">Lead Content</label>
+                <textarea id="leadContent" th:field="*{leadContent}" class="form-control" rows="4" required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="installContent">Install Content</label>
-            <textarea id="installContent" th:field="*{installContent}" class="form-control" rows="4"
-                      required></textarea>
-        </div>
+            <div class="form-group">
+                <label for="installContent">Install Content</label>
+                <textarea id="installContent" th:field="*{installContent}" class="form-control" rows="4"
+                          required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label for="amountPlaceholder">Amount Placeholder</label>
-            <input type="text" id="amountPlaceholder" th:field="*{amountPlaceholder}" class="form-control" required/>
-        </div>
+            <div class="form-group">
+                <label for="amountPlaceholder">Amount Placeholder</label>
+                <input type="text" id="amountPlaceholder" th:field="*{amountPlaceholder}" class="form-control"/>
+            </div>
 
-        <div class="form-group">
-            <label for="idPlaceholder">ID Placeholder</label>
-            <input type="text" id="idPlaceholder" th:field="*{idPlaceholder}" class="form-control" required/>
-        </div>
+            <div class="form-group">
+                <label for="idPlaceholder">ID Placeholder</label>
+                <input type="text" id="idPlaceholder" th:field="*{idPlaceholder}" class="form-control"/>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Speichern</button>
+            <button type="submit" class="btn btn-primary">Speichern</button>
     </form>
     <br>
 

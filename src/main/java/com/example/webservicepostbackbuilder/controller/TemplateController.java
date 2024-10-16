@@ -170,5 +170,16 @@ public class TemplateController {
         return "templateContent"; // Erstelle eine separate Ansicht für den Inhalt
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPost(@RequestParam String username, @RequestParam String password) {
+        System.out.println("Versuche Anmeldung mit Benutzername: " + username + " und Passwort: " + password);
+        return "redirect:/"; // Weiterleitung nach erfolgreicher Anmeldung (oder zurück zur Anmeldeseite bei Fehler)
+    }
+
 
 }
