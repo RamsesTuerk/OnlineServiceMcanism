@@ -109,6 +109,7 @@ public class TemplateController {
                                   @RequestParam String eid,
                                   @RequestParam String cid,
                                   @RequestParam String id,
+                                  @RequestParam String description,
                                   @RequestParam String amount,
                                   Model model) {
 
@@ -123,6 +124,7 @@ public class TemplateController {
         model.addAttribute("cid", cid); // Um CID im Template anzuzeigen
         model.addAttribute("amount", amount); // Für das Amount-Feld
         model.addAttribute("id", id); // Für das ID-Feld
+        model.addAttribute("description", description);
         return "templateContent"; // Stelle sicher, dass du die richtige View zurückgibst
     }
 

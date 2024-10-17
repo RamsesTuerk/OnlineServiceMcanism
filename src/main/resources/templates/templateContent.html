@@ -17,6 +17,7 @@
 
     <form th:action="@{/template/generate}" method="post" class="mt-4">
         <input type="hidden" name="content" th:value="${content}">
+        <input type="hidden" name="description" th:value="${description}">
 
         <div class="form-group">
             <label for="eid">EID:</label>
@@ -45,5 +46,8 @@
     <br>
     <br>
 </div>
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white" target="_blank">Imprint</a></p>
+</footer>
 </body>
 </html>

@@ -5,8 +5,8 @@
     <title>Postback Builder</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
-<div class="container mt-5">
+<body class="d-flex flex-column min-vh-100 bg-light">
+<div class="container mt-5 flex-grow-1">
     <h1 class="text-center text-primary">Template Generator</h1>
     <form th:action="@{/loadContent}" method="post" target="templateIframe" class="mt-4">
         <div class="form-group">
@@ -31,5 +31,8 @@
     </form>
 
 </div>
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white" target="_blank">Imprint</a></p>
+</footer>
 </body>
 </html>
