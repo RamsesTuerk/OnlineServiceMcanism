@@ -6,17 +6,21 @@
     <title>Template Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script>
+        // Funktion zum Laden der Optionen basierend auf der ausgewählten Vorlage
         function loadTemplateOptions() {
             const templateId = document.getElementById('templateSelect').value;
 
             if (!templateId) {
+                // Wenn keine Vorlage ausgewählt ist, leere die Dropdown-Optionen
                 updateOptionsDropdown({});
                 return;
             }
 
+            // Fetch-Request, um die Optionen für die ausgewählte Vorlage zu laden
             fetch(`/templates/${templateId}/options`)
                 .then(response => response.json())
                 .then(data => {
+                    // Aktualisiere die Dropdown-Optionen mit den erhaltenen Daten
                     updateOptionsDropdown(data);
                 })
                 .catch(error => {
@@ -24,10 +28,12 @@
                 });
         }
 
+        // Funktion zur Aktualisierung des Dropdowns für die Skripttypen
         function updateOptionsDropdown(data) {
             const saleTypeDropdown = document.getElementById('saleType');
-            saleTypeDropdown.innerHTML = '';
+            saleTypeDropdown.innerHTML = ''; // Leere das Dropdown
 
+            // Überprüfe, ob es Optionen gibt, und füge sie hinzu
             if (data.sale) {
                 saleTypeDropdown.innerHTML += '<option value="sale">Sale</option>';
             }
@@ -38,6 +44,7 @@
                 saleTypeDropdown.innerHTML += '<option value="install">Install</option>';
             }
 
+            // Wenn keine Optionen vorhanden sind, zeige eine entsprechende Nachricht an
             if (!saleTypeDropdown.innerHTML) {
                 saleTypeDropdown.innerHTML = '<option value="">Keine Optionen verfügbar</option>';
             }
