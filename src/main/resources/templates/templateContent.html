@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Template Content</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="/js/upload.js" defer></script>
 </head>
 <body>
 <div class="container mt-4">
@@ -43,6 +42,8 @@
         <h2>Generated Content:</h2>
         <textarea rows="10" cols="50" th:text="${generatedContent}" readonly class="form-control"></textarea>
     </div>
+
+    <button type="button" class="btn btn-secondary" onclick="goBack()">Zurück</button> <!-- Zurück-Button hier -->
     <br>
     <br>
 </div>
