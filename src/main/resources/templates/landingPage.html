@@ -56,8 +56,8 @@
     <h1 class="text-center text-primary">MCANISM Script Generator</h1>
     <form th:action="@{/loadContent}" method="post" target="templateIframe" class="mt-4">
         <div class="form-group">
-            <label for="templateSelect">Integreation method</label>
-            <select id="templateSelect" name="id" class="form-control" onchange="loadTemplateOptions()">
+            <label for="templateSelect">Integration method</label>
+            <select id="templateSelect" name="id" class="form-control" onchange="loadTemplateOptions()" required>
                 <option value="">Please select a integration method</option>
                 <th:block th:each="template : ${templates}">
                     <option th:value="${template.id}" th:text="${template.name}"></option>
@@ -66,7 +66,7 @@
         </div>
         <div class="form-group">
             <label for="saleType">Script Typ:</label>
-            <select id="saleType" name="saleType" class="form-control">
+            <select id="saleType" name="saleType" class="form-control" required>
                 <option value="">Please select a integration method</option>
             </select>
         </div>
