@@ -26,7 +26,7 @@
         <tbody>
         <tr th:each="template : ${templates}">
             <td>
-                <a th:href="@{/template/edit/{name}(name=${template.name})}" th:text="${template.name}"></a>
+                <a th:href="@{/template/edit/{id}(id=${template.id})}" th:text="${template.name}"></a>
             </td>
             <td th:text="${template.description}"></td> <!-- Beschreibung hinzufügen -->
             <td th:text="${template.saleContent}"></td>
@@ -35,10 +35,11 @@
             <td th:text="${template.amountPlaceholder}"></td>
             <td th:text="${template.idPlaceholder}"></td>
             <td>
-                <form th:action="@{/template/delete/{name}(name=${template.name})}" method="post">
+                <form th:action="@{/template/delete/{id}(id=${template.id})}" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
+
         </tr>
         </tbody>
     </table>

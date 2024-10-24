@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -62,11 +61,10 @@ public class TemplateController {
         }
     }
 
-
-    // Edit an existing template by its name
-    @GetMapping("/template/edit/{name}")
-    public String editTemplate(@PathVariable String name, Model model) {
-        Template template = templateService.getTemplate(name);
+    // Edit an existing template by its ID
+    @GetMapping("/template/edit/{id}") // Change the path variable to {id}
+    public String editTemplate(@PathVariable Long id, Model model) {
+        Template template = templateService.getTemplateById(id); // Use the ID to fetch the template
         if (template == null) {
             return "redirect:/templates";
         }
@@ -88,18 +86,21 @@ public class TemplateController {
         return "templateList";
     }
 
-    // View a specific template by its name
-    @GetMapping("/template/{name}")
-    public String viewTemplate(@PathVariable String name, Model model) {
-        Template template = templateService.getTemplate(name);
+    // View a specific template by its ID
+    @GetMapping("/template/{id}")
+    public String viewTemplate(@PathVariable Long id, Model model) {
+        Template template = templateService.getTemplateById(id);
+        if (template == null) {
+            return "redirect:/templates";
+        }
         model.addAttribute("template", template);
         return "templateView";
     }
 
-    // Delete a template by its name
-    @PostMapping("/template/delete/{name}")
-    public String deleteTemplate(@PathVariable String name) {
-        templateService.deleteTemplate(name);
+    // Delete a template by its ID
+    @PostMapping("/template/delete/{id}")
+    public String deleteTemplate(@PathVariable Long id) {
+        templateService.deleteTemplate(id);
         return "redirect:/templates";
     }
 
@@ -113,31 +114,32 @@ public class TemplateController {
                                   @RequestParam String amount,
                                   Model model) {
 
-
         content = content.replace("{eid}", eid)
                 .replace("{cid}", cid)
                 .replace("{amount}", amount != null ? amount : "")
                 .replace("{id}", id != null ? id : "");
 
         model.addAttribute("generatedContent", content);
-        model.addAttribute("eid", eid); // Um EID im Template anzuzeigen
-        model.addAttribute("cid", cid); // Um CID im Template anzuzeigen
-        model.addAttribute("amount", amount); // Für das Amount-Feld
-        model.addAttribute("id", id); // Für das ID-Feld
+        model.addAttribute("eid", eid);
+        model.addAttribute("cid", cid);
+        model.addAttribute("amount", amount);
+        model.addAttribute("id", id);
         model.addAttribute("description", description);
-        return "templateContent"; // Stelle sicher, dass du die richtige View zurückgibst
+        return "templateContent";
     }
 
-
-    // Load template-specific content in an Iframe
+    // Load template-specific content in an iframe
     @PostMapping("/loadContent")
-    public String loadContent(@RequestParam String templateName,
+    public String loadContent(@RequestParam Long id,
                               @RequestParam String saleType,
                               @RequestParam(required = false) String eid,
                               @RequestParam(required = false) String cid,
                               Model model) {
-        // Hier den Inhalt basierend auf dem Template und Sale Typ abrufen
-        Template template = templateService.getTemplate(templateName);
+        Template template = templateService.getTemplateById(id);
+        if (template == null) {
+            return "redirect:/";
+        }
+
         String content = switch (saleType) {
             case "sale" -> template.getSaleContent();
             case "lead" -> template.getLeadContent();
@@ -145,31 +147,15 @@ public class TemplateController {
             default -> "";
         };
 
-        String amount;
-        String id;
-
-        if(template.getAmountPlaceholder() != null){
-            amount = template.getAmountPlaceholder();
-        }else {
-            amount = "";
-        }
-
-        if(template.getIdPlaceholder() != null){
-            id = template.getIdPlaceholder();
-        }else {
-            id = "";
-        }
-
-        // Füge die Werte für eid und cid zum Model hinzu
+        model.addAttribute("content", content);
         model.addAttribute("eid", eid);
         model.addAttribute("cid", cid);
-        model.addAttribute("content", content);
-        model.addAttribute("amount", amount);
-        model.addAttribute("id", id);
+        model.addAttribute("amount", template.getAmountPlaceholder() != null ? template.getAmountPlaceholder() : "");
+        model.addAttribute("id", template.getIdPlaceholder() != null ? template.getIdPlaceholder() : "");
         model.addAttribute("selectedTemplate", template.getName());
         model.addAttribute("description", template.getDescription());
 
-        return "templateContent"; // Erstelle eine separate Ansicht für den Inhalt
+        return "templateContent";
     }
 
     @GetMapping("/login")
@@ -179,9 +165,7 @@ public class TemplateController {
 
     @PostMapping("/login")
     public String loginPost(@RequestParam String username, @RequestParam String password) {
-        System.out.println("Versuche Anmeldung mit Benutzername: " + username + " und Passwort: " + password);
-        return "redirect:/"; // Weiterleitung nach erfolgreicher Anmeldung (oder zurück zur Anmeldeseite bei Fehler)
+        System.out.println("Attempting login with username: " + username + " and password: " + password);
+        return "redirect:/";
     }
-
-
 }

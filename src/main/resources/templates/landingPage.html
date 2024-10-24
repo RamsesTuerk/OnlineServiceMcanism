@@ -11,9 +11,9 @@
     <form th:action="@{/loadContent}" method="post" target="templateIframe" class="mt-4">
         <div class="form-group">
             <label for="templateSelect">Wähle eine Template:</label>
-            <select id="templateSelect" name="templateName" class="form-control">
+            <select id="templateSelect" name="id" class="form-control">
                 <option th:each="template : ${templates}"
-                        th:value="${template.name}"
+                        th:value="${template.id}"
                         th:text="${template.name}"></option>
             </select>
         </div>

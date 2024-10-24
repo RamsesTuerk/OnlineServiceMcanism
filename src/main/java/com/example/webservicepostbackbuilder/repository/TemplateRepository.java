@@ -1,14 +1,11 @@
 package com.example.webservicepostbackbuilder.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TemplateRepository {
+import java.util.Optional;
 
-    void save(Template template);
-
-    Template findByName(String name);
-
-    void deleteByName(String name);
-
-    List<Template> findAll();
+@Repository
+public interface TemplateRepository extends JpaRepository<Template, Long> {
+    Optional<Template> findByName(String name);
 }

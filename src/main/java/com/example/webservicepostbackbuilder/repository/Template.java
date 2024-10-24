@@ -1,7 +1,16 @@
 package com.example.webservicepostbackbuilder.repository;
 
-public class Template {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Template {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
     private String name;
     private String saleContent;
     private String leadContent;
@@ -76,5 +85,13 @@ public class Template {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
