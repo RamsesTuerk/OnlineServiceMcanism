@@ -39,6 +39,23 @@ public class TemplateController {
         return "landingPage";
     }
 
+    // Endpoint to dynamically load options based on template ID
+    @GetMapping("/templates/{id}/options")
+    public ResponseEntity<Map<String, Boolean>> getTemplateOptions(@PathVariable Long id) {
+        Template template = templateService.getTemplateById(id);
+        if (template == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Map<String, Boolean> options = Map.of(
+                "sale", template.getSaleContent() != null && !template.getSaleContent().isEmpty(),
+                "lead", template.getLeadContent() != null && !template.getLeadContent().isEmpty(),
+                "install", template.getInstallContent() != null && !template.getInstallContent().isEmpty()
+        );
+
+        return ResponseEntity.ok(options);
+    }
+
     // Form for creating or editing a template
     @GetMapping("/template")
     public String showTemplateForm(Model model) {
@@ -62,9 +79,9 @@ public class TemplateController {
     }
 
     // Edit an existing template by its ID
-    @GetMapping("/template/edit/{id}") // Change the path variable to {id}
+    @GetMapping("/template/edit/{id}")
     public String editTemplate(@PathVariable Long id, Model model) {
-        Template template = templateService.getTemplateById(id); // Use the ID to fetch the template
+        Template template = templateService.getTemplateById(id);
         if (template == null) {
             return "redirect:/templates";
         }
@@ -113,7 +130,6 @@ public class TemplateController {
                                   @RequestParam String description,
                                   @RequestParam String amount,
                                   Model model) {
-
         content = content.replace("{eid}", eid)
                 .replace("{cid}", cid)
                 .replace("{amount}", amount != null ? amount : "")

@@ -2,34 +2,71 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Postback Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function loadTemplateOptions() {
+            const templateId = document.getElementById('templateSelect').value;
+
+            if (!templateId) {
+                updateOptionsDropdown({});
+                return;
+            }
+
+            fetch(`/templates/${templateId}/options`)
+                .then(response => response.json())
+                .then(data => {
+                    updateOptionsDropdown(data);
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Optionen:', error);
+                });
+        }
+
+        function updateOptionsDropdown(data) {
+            const saleTypeDropdown = document.getElementById('saleType');
+            saleTypeDropdown.innerHTML = '';
+
+            if (data.sale) {
+                saleTypeDropdown.innerHTML += '<option value="sale">Sale</option>';
+            }
+            if (data.lead) {
+                saleTypeDropdown.innerHTML += '<option value="lead">Lead</option>';
+            }
+            if (data.install) {
+                saleTypeDropdown.innerHTML += '<option value="install">Install</option>';
+            }
+
+            if (!saleTypeDropdown.innerHTML) {
+                saleTypeDropdown.innerHTML = '<option value="">Keine Optionen verfügbar</option>';
+            }
+        }
+    </script>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 <div class="container mt-5 flex-grow-1">
-    <h1 class="text-center text-primary">Template Generator</h1>
+    <h1 class="text-center text-primary">MCANISM Script Generator</h1>
     <form th:action="@{/loadContent}" method="post" target="templateIframe" class="mt-4">
         <div class="form-group">
-            <label for="templateSelect">Wähle eine Template:</label>
-            <select id="templateSelect" name="id" class="form-control">
-                <option th:each="template : ${templates}"
-                        th:value="${template.id}"
-                        th:text="${template.name}"></option>
+            <label for="templateSelect">Integreation method</label>
+            <select id="templateSelect" name="id" class="form-control" onchange="loadTemplateOptions()">
+                <option value="">Please select a integration method</option>
+                <th:block th:each="template : ${templates}">
+                    <option th:value="${template.id}" th:text="${template.name}"></option>
+                </th:block>
             </select>
         </div>
         <div class="form-group">
-            <label for="saleType">Sale Typ:</label>
+            <label for="saleType">Script Typ:</label>
             <select id="saleType" name="saleType" class="form-control">
-                <option value="sale">Sale</option>
-                <option value="lead">Lead</option>
-                <option value="install">Install</option>
+                <option value="">Please select a integration method</option>
             </select>
         </div>
         <input type="hidden" name="eid" th:value="${param.eid}"/>
         <input type="hidden" name="cid" th:value="${param.cid}"/>
         <button type="submit" class="btn btn-primary">Anzeigen</button>
     </form>
-
 </div>
 <footer class="bg-dark text-white text-center py-3 mt-5">
     <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white" target="_blank">Imprint</a></p>
