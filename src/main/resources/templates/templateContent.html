@@ -4,7 +4,28 @@
     <meta charset="UTF-8">
     <title>Template Content</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function copyToClipboard(id) {
+            var copyText = document.getElementById(id);
+            copyText.select(); // Wählt den Text im Textfeld aus
+            document.execCommand("copy"); // Kopiert den ausgewählten Text in die Zwischenablage
 
+            // Optional: Hier kannst du eine Benachrichtigung anzeigen, dass der Text kopiert wurde
+            alert("Text kopiert: " + copyText.value);
+        }
+    </script>
+    <style>
+        .textarea-container {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 5px; /* Abstand vom oberen Rand */
+            right: 0px; /* Abstand vom rechten Rand */
+            z-index: 1; /* Damit der Button über dem Textfeld bleibt */
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-4">
@@ -13,6 +34,12 @@
     <div class="mt-4">
         <h2>Description:</h2>
         <p th:utext="${description}"></p> <!-- Hier wird die Beschreibung angezeigt -->
+    </div>
+
+    <div class="mt-4 textarea-container">
+        <h2>Init Script:</h2>
+        <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('init')">Kopieren</button>
+        <textarea rows="1" cols="50" id="init" th:text="'<script src=&quot;https://api.skynet.mcanism.com/static/js/init.js&quot;></script>'" readonly class="form-control"></textarea>
     </div>
 
     <form th:action="@{/template/generate}" method="post" class="mt-4">
@@ -39,9 +66,10 @@
         <button type="submit" class="btn btn-primary">Generate</button>
     </form>
 
-    <div class="mt-4">
+    <div class="mt-4 textarea-container">
         <h2>Generated Content:</h2>
-        <textarea rows="10" cols="50" th:text="${generatedContent}" readonly class="form-control"></textarea>
+        <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('generatedContent')">Kopieren</button>
+        <textarea rows="10" cols="50" id="generatedContent" th:text="${generatedContent}" readonly class="form-control"></textarea>
     </div>
 
     <br>
