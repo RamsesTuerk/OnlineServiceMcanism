@@ -53,7 +53,9 @@
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 <div class="container mt-5 flex-grow-1">
-    <h1 class="text-center text-primary">MCANISM Script Generator</h1>
+    <h1 class="text-center text-primary">
+        <span th:text="${#strings.isEmpty(name) ? 'MCANISM Script Generator' : 'Template Generator für ' + name}"></span>
+    </h1>
     <form th:action="@{/loadContent}" method="post" id="templateIframe" class="mt-4">
         <div class="form-group">
             <label for="templateSelect">Integreation method</label>

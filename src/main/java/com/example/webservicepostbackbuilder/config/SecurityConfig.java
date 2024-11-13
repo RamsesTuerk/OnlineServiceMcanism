@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/template/generate").permitAll() // Zugang ohne Authentifizierung
+                        .requestMatchers("/template/generate", "/upload").permitAll() // Zugang ohne Authentifizierung
                         .requestMatchers("/template", "/templates").authenticated() // Zugang mit Authentifizierung
                         .anyRequest().permitAll() // Alle anderen Anfragen erlauben
                 )

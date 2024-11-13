@@ -163,7 +163,7 @@ public class TemplateController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        Path path = Paths.get("src/main/resources/static/images/" + fileName);
+        Path path = Paths.get("/opt/tomcat/webapps/ROOT/" + fileName);
 
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
@@ -171,8 +171,10 @@ public class TemplateController {
             response.put("fileName", fileName);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+
     }
 
     // Login-Formular anzeigen
