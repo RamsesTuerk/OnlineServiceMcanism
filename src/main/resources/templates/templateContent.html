@@ -9,9 +9,6 @@
             var copyText = document.getElementById(id);
             copyText.select(); // Wählt den Text im Textfeld aus
             document.execCommand("copy"); // Kopiert den ausgewählten Text in die Zwischenablage
-
-            // Optional: Hier kannst du eine Benachrichtigung anzeigen, dass der Text kopiert wurde
-            alert("Text kopiert: " + copyText.value);
         }
     </script>
     <style>
@@ -34,12 +31,27 @@
     <div class="mt-4">
         <h2>Description:</h2>
         <p th:utext="${description}" style="text-align: left;"></p> <!-- Hier wird die Beschreibung angezeigt -->
+        <br>
+        <br>
+        <br>
     </div>
 
+    <div>
+        <h2>Step 1</h2>
+        <h4>This Init Script has to be placed on every side Exept the Checkout Page. No changes needed!</h4>
+    </div>
     <div class="mt-4 textarea-container">
         <h2>Init Script:</h2>
         <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('init')">Kopieren</button>
         <textarea rows="1" cols="50" id="init" th:text="'<script src=&quot;https://api.skynet.mcanism.com/static/js/init.js&quot;></script>'" readonly class="form-control"></textarea>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div>
+        <h2>Step 2</h2>
+        <h4>This is the Tracking-Script. It should be placed on the Checkoutpage e.g. the last Page that confirms the order.</h4>
     </div>
 
     <form th:action="@{/template/generate}" method="post" class="mt-4">
@@ -67,7 +79,7 @@
     </form>
 
     <div class="mt-4 textarea-container">
-        <h2>Generated Content:</h2>
+        <h2>Generated Tracking-Script:</h2>
         <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('generatedContent')">Kopieren</button>
         <textarea rows="10" cols="50" id="generatedContent" th:text="${generatedContent}" readonly class="form-control"></textarea>
     </div>

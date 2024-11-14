@@ -162,20 +162,46 @@ public class TemplateController {
     // Bild hochladen und speichern
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
+        // Log-Ausgabe für den Upload-Versuch
+        System.out.println("Upload attempt with file: " + file.getOriginalFilename());
+
+        // Überprüfen, ob die Datei leer ist
+        if (file.isEmpty()) {
+            System.out.println("File is empty.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "File is empty"));
+        }
+
+        // Überprüfen, ob das Zielverzeichnis beschreibbar ist
+        // /opt/tomcat/webapps/ROOT/
+        Path targetDirectory = Paths.get("src/main/resources/static/images");
+        if (!Files.isWritable(targetDirectory)) {
+            System.out.println("Directory is not writable: " + targetDirectory.toString());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Directory is not writable"));
+        }
+
+        // Der Name der hochgeladenen Datei
         String fileName = file.getOriginalFilename();
-        Path path = Paths.get("/opt/tomcat/webapps/ROOT/" + fileName);
+        Path path = targetDirectory.resolve(fileName);
 
         try {
+            // Datei kopieren
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+            // Erfolgsmeldung im Log und Response zurückgeben
+            System.out.println("File copied successfully to " + path.toString());
             Map<String, String> response = new HashMap<>();
             response.put("fileName", fileName);
             return ResponseEntity.ok(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
 
+        } catch (IOException e) {
+            // Fehler im Log ausgeben und Fehlerantwort zurückgeben
+            System.out.println("Error copying file: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Internal server error during file upload"));
+        }
     }
+
+
 
     // Login-Formular anzeigen
     @GetMapping("/login")
