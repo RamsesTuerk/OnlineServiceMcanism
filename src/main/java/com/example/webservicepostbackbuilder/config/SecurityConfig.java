@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/template", "/templates").authenticated() // Zugang mit Authentifizierung
                         .anyRequest().permitAll() // Alle anderen Anfragen erlauben
                 )
+                 // CSRF deaktivieren, falls nicht benötigt
                 .formLogin(form -> form
                         .loginPage("/login") // Anmeldeseite
                         .permitAll()
@@ -36,6 +37,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public UserDetailsService userDetailsService() throws Exception {
@@ -56,7 +58,7 @@ public class SecurityConfig {
         Map<String, String> users = new HashMap<>();
         //lokales Testen: src/main/resources/users.txt
         //server pfad: /opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("/opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(":"); // Annahme: Benutzername und Passwort sind durch ":" getrennt

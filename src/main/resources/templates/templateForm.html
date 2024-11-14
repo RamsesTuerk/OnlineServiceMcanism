@@ -56,9 +56,13 @@
     <br>
 
     <form id="imageUploadForm" method="post" action="/upload" enctype="multipart/form-data">
+        <!-- CSRF-Token hinzufügen -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <input type="file" name="file" required/>
         <button type="submit">Bild hochladen</button>
     </form>
+
+    <div th:if="${message}" class="alert alert-info mt-3" th:text="${message}"></div>
 </div>
 <footer class="bg-dark text-white text-center py-3 mt-5">
     <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white" target="_blank">Imprint</a></p>

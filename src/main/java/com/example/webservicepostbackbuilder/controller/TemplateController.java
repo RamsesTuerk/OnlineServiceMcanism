@@ -159,49 +159,19 @@ public class TemplateController {
         return "templateContent";
     }
 
-    // Bild hochladen und speichern
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
-        // Log-Ausgabe für den Upload-Versuch
-        System.out.println("Upload attempt with file: " + file.getOriginalFilename());
-
-        // Überprüfen, ob die Datei leer ist
-        if (file.isEmpty()) {
-            System.out.println("File is empty.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "File is empty"));
-        }
-
-        // Überprüfen, ob das Zielverzeichnis beschreibbar ist
-        // /opt/tomcat/webapps/ROOT/
-        Path targetDirectory = Paths.get("src/main/resources/static/images");
-        if (!Files.isWritable(targetDirectory)) {
-            System.out.println("Directory is not writable: " + targetDirectory.toString());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Directory is not writable"));
-        }
-
-        // Der Name der hochgeladenen Datei
-        String fileName = file.getOriginalFilename();
-        Path path = targetDirectory.resolve(fileName);
-
+    public String uploadImage(@RequestParam("file") MultipartFile file, Model model) {
+        String uploadDirectory = "/opt/tomcat/webapps/ROOT/WEB-INF/classes/static/images/";
         try {
-            // Datei kopieren
+            Path path = Paths.get(uploadDirectory + file.getOriginalFilename());
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-            // Erfolgsmeldung im Log und Response zurückgeben
-            System.out.println("File copied successfully to " + path.toString());
-            Map<String, String> response = new HashMap<>();
-            response.put("fileName", fileName);
-            return ResponseEntity.ok(response);
-
+            model.addAttribute("message", "Bild erfolgreich hochgeladen: " + file.getOriginalFilename());
         } catch (IOException e) {
-            // Fehler im Log ausgeben und Fehlerantwort zurückgeben
-            System.out.println("Error copying file: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Internal server error during file upload"));
+            model.addAttribute("message", "Fehler beim Hochladen des Bildes.");
         }
+        return "redirect:/template";  // Leitet zurück zum Formular
     }
-
-
 
     // Login-Formular anzeigen
     @GetMapping("/login")
