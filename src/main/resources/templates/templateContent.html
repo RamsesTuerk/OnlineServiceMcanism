@@ -53,7 +53,7 @@
         <h2>Step 2</h2>
         <h4>This is the Tracking-Script. It should be placed on the Checkoutpage e.g. the last Page that confirms the order.</h4>
     </div>
-
+    
     <form th:action="@{/template/generate}" method="post" class="mt-4">
         <input type="hidden" name="content" th:value="${content}">
         <input type="hidden" name="description" th:value="${description}">
@@ -81,7 +81,7 @@
     <div class="mt-4 textarea-container">
         <h2>Generated Tracking-Script:</h2>
         <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('generatedContent')">Kopieren</button>
-        <textarea rows="10" cols="50" id="generatedContent" th:text="${generatedContent}" readonly class="form-control"></textarea>
+        <textarea rows="15" cols="50" id="generatedContent" th:text="${generatedContent}" readonly class="form-control"></textarea>
     </div>
 
     <br>

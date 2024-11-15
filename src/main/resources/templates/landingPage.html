@@ -56,6 +56,12 @@
                 window.location.reload();
             }
         });
+
+        function copyToClipboard(id) {
+            var copyText = document.getElementById(id);
+            copyText.select(); // Wählt den Text im Textfeld aus
+            document.execCommand("copy"); // Kopiert den ausgewählten Text in die Zwischenablage
+        }
     </script>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -83,9 +89,36 @@
         <input type="hidden" name="cid" th:value="${param.cid}"/>
         <button type="submit" class="btn btn-primary">Anzeigen</button>
     </form>
+    <br>
+    <br>
+    <br>
+    <div>
+        <h1 class="text-center text-primary">
+            Data Protection & Cookie Notice
+        </h1>
+        <br>
+        <textarea
+                rows="10"
+                id="cookieText"
+                th:text="|Chefscampaign.com Performance Marketing für Restaurants
+Dieses Produkt wird betrieben von der Firma:
+MCANISM Technology GmbH - Cremon 11 - 20457 Hamburg - Deutschland
+
+Ziel: Zurverfügungstellung des Onlineangebotes, seiner Funktionen und Inhalte. Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern. Sicherheitsmaßnahmen. Reichweitenmessung/Marketing.
+
+Chefs Campaign/MCANISM Technology GmbH und der Publisher sind gemeinsam für die Datenverarbeitung im Zusammenhang mit dem Partnerprogramm verantwortlich. Die ihnen gemeinsam obliegenden Verpflichtungen wurden in einer Vereinbarung über gemeinsame Verarbeitung festgehalten. Laut dieser Vereinbarung können Sie sich mit Ihren datenschutzrechtlichen Anliegen an beide Verantwortlichen wenden. Der jeweils zuerst angesprochene Verantwortliche wird Ihre Anfrage beantworten. Jeder Verantwortliche hält eigenständig Datenschutzinformationen nach Art. 13, 14 und 26 DSGVO vor und trifft die erforderlichen Maßnahmen zum Schutz personenbezogener Daten und zur Einhaltung der übrigen DSGVO-Vorschriften in seinem Unternehmen. Der Vertrag über gemeinsame Verarbeitung und weitere Informationen zum Datenschutz bei MCANISM sind auf Anfrage beim Unternehmen oder über dessen Webseite einsehbar. https://www.mcanism.com/privacy-policy &amp; https://www.mcanism.com/datenschutz|"
+                readonly class="form-control w-100">
+</textarea>
+        <br>
+        <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('cookieText')">Kopieren
+        </button>
+
+
+    </div>
 </div>
 <footer class="bg-dark text-white text-center py-3 mt-5">
-    <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white" target="_blank">Imprint</a></p>
+    <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white"
+                                    target="_blank">Imprint</a></p>
 </footer>
 </body>
 </html>
