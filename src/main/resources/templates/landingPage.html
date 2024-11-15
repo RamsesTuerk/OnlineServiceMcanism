@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script>
         // Funktion zum Laden der Optionen basierend auf der ausgewählten Vorlage
         function loadTemplateOptions() {
@@ -63,11 +64,41 @@
             document.execCommand("copy"); // Kopiert den ausgewählten Text in die Zwischenablage
         }
     </script>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif !important;
+        }
+
+        h1, h2, h3, h4, h5, h6, p, label, button, textarea, select, input {
+            font-family: 'Lato', sans-serif !important;
+        }
+
+        body h1 {
+            color: #33B3D1 !important;
+            text-align: center;
+        }
+
+        h6 {
+            color: #b3b3b3; /* Helles Grau */
+            font-family: 'Lato', sans-serif;
+            text-align: right;
+        }
+        .btn-primary {
+            background-color: #33B3D1;
+            border-color: #33B3D1;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a8ba7;
+            border-color: #2a8ba7;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 <div class="container mt-5 flex-grow-1">
-    <h1 class="text-center text-primary">
-        <span th:text="${#strings.isEmpty(name) ? 'MCANISM Script Generator' : 'Template Generator für ' + name}"></span>
+    <img src="/images/Logo.png" style="width: 50px; height: auto; text-align: left; margin-left: 10px">
+    <h1 class="container mt-4">
+        MCANISM Script Generator
     </h1>
     <form th:action="@{/loadContent}" method="post" id="templateIframe" class="mt-4">
         <div class="form-group">
@@ -93,8 +124,8 @@
     <br>
     <br>
     <div>
-        <h1 class="text-center text-primary">
-            Data Protection & Cookie Notice
+        <h1 class="container mt-4">
+            Data Protection & Cookie Notice Chefscampaing German
         </h1>
         <br>
         <textarea
@@ -113,11 +144,14 @@ Chefs Campaign/MCANISM Technology GmbH und der Publisher sind gemeinsam für die
         <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('cookieText')">Kopieren
         </button>
 
-
     </div>
+    <br>
+    <br>
+    <h6>https://Mekanism.de?eid=xxxxxx&cid=xxxxxx</h6>
 </div>
 <footer class="bg-dark text-white text-center py-3 mt-5">
-    <p>&copy; 2024 mcanism.com | <a href="https://www.mcanism.com/imprint" class="text-white"
+    <p>&copy; 2024 <a href="https://www.mcanism.com" class="text-white"
+                      target="_blank">mcanism.com</a> | <a href="https://www.mcanism.com/imprint" class="text-white"
                                     target="_blank">Imprint</a></p>
 </footer>
 </body>

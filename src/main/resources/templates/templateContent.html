@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Template Content</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script>
         function copyToClipboard(id) {
             var copyText = document.getElementById(id);
@@ -22,11 +23,33 @@
             right: 0px; /* Abstand vom rechten Rand */
             z-index: 1; /* Damit der Button über dem Textfeld bleibt */
         }
+        body {
+            font-family: 'Lato', sans-serif !important;
+        }
+
+        h1, h2, h3, h4, h5, h6, p, label, button, textarea, select, input {
+            font-family: 'Lato', sans-serif !important;
+        }
+        body h1 {
+            color: #33B3D1 !important;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #33B3D1;
+            border-color: #33B3D1;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a8ba7;
+            border-color: #2a8ba7;
+        }
     </style>
 </head>
 <body>
 <div class="container mt-4">
-    <h1>Template Content</h1>
+    <img src="/images/Logo.png" style="width: 50px; height: auto; text-align: left; margin-left: 10px">
+    <h1>Implementation Guide</h1>
 
     <div class="mt-4">
         <h2>Description:</h2>
@@ -68,7 +91,7 @@
         </div>
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" th:value="${amount}" required class="form-control"/>
+            <input type="text" id="amount" name="amount" th:value="${amount}"  class="form-control"/>
         </div>
         <div class="form-group">
             <label for="id">ID:</label>
