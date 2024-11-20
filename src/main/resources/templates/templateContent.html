@@ -60,6 +60,7 @@
         <br>
     </div>
 
+
     <div>
         <h2>Step 1</h2>
         <h4>This Init Script has to be placed on every side Exept the Checkout Page. No changes needed!</h4>
@@ -81,9 +82,10 @@
     <form th:action="@{/template/generate}" method="post" class="mt-4">
         <input type="hidden" name="content" th:value="${content}">
         <input type="hidden" name="description" th:value="${description}">
+        <input type="hidden" name="selectedTemplate" value="${selectedTemplate}">
 
         <div class="form-group">
-            <label for="eid">EID:</label>
+            <label for="eid">EID:</label>@PostMapping("/template/generate")
             <input type="text" id="eid" name="eid" th:value="${eid}" required class="form-control"/>
         </div>
         <div class="form-group">

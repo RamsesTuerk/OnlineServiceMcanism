@@ -107,24 +107,32 @@ public class TemplateController {
 
     // Inhalt basierend auf ausgewähltem Template und Typ generieren
     @PostMapping("/template/generate")
-    public String generateContent(@RequestParam String content,
-                                  @RequestParam String eid,
-                                  @RequestParam String cid,
-                                  @RequestParam String id,
-                                  @RequestParam String description,
-                                  @RequestParam String amount,
-                                  Model model) {
-        content = content.replace("{eid}", eid)
-                .replace("{cid}", cid)
-                .replace("{amount}", amount != null ? amount : "")
-                .replace("{id}", id != null ? id : "");
+    public String generateContent(
+            @RequestParam String content, // Der ursprüngliche Inhalt
+            @RequestParam String eid,
+            @RequestParam String cid,
+            @RequestParam String id,
+            @RequestParam(required = false) String amount,
+            @RequestParam String description,
+            @RequestParam String selectedTemplate,
+            Model model) {
 
-        model.addAttribute("generatedContent", content);
+        // Generierung basierend auf `content`, aber `content` bleibt unverändert
+        String generatedContent = content.replace("{eid}", eid)
+                .replace("{cid}", cid)
+                .replace("{id}", id)
+                .replace("{amount}", amount != null ? amount : "");
+
+        // Original und generierten Inhalt ins Model legen
+        model.addAttribute("content", content); // Original bleibt erhalten
+        model.addAttribute("generatedContent", generatedContent); // Generierte Ausgabe
         model.addAttribute("eid", eid);
         model.addAttribute("cid", cid);
-        model.addAttribute("amount", amount);
         model.addAttribute("id", id);
+        model.addAttribute("amount", amount);
         model.addAttribute("description", description);
+        model.addAttribute("selectedTemplate", selectedTemplate);
+
         return "templateContent";
     }
 
