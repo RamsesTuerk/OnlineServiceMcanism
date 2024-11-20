@@ -61,24 +61,26 @@
     </div>
 
 
-    <div>
-        <h2>Step 1</h2>
-        <h4>This Init Script has to be placed on every side Exept the Checkout Page. No changes needed!</h4>
-    </div>
-    <div class="mt-4 textarea-container">
-        <h2>Init Script:</h2>
-        <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('init')">Kopieren</button>
-        <textarea rows="1" cols="50" id="init" th:text="'<script src=&quot;https://api.skynet.mcanism.com/static/js/init.js&quot;></script>'" readonly class="form-control"></textarea>
-        <br>
-        <br>
-        <br>
+    <div th:if="${selectedTemplate != null and !selectedTemplate.contains('postback')}">
+        <div>
+            <h2>Step 1</h2>
+            <h4>This Init Script has to be placed on every side except the Checkout Page. No changes needed!</h4>
+        </div>
+        <div class="mt-4 textarea-container">
+            <h2>Init Script:</h2>
+            <button type="button" class="btn btn-secondary copy-button" onclick="copyToClipboard('init')">Kopieren</button>
+            <textarea rows="1" cols="50" id="init" th:text="'<script src=&quot;https://api.skynet.mcanism.com/static/js/init.js&quot;></script>'" readonly class="form-control"></textarea>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div>
+            <h2>Step 2</h2>
+            <h4>This is the Tracking-Script. It should be placed on the Checkoutpage e.g. the last Page that confirms the order.</h4>
+        </div>
     </div>
 
-    <div>
-        <h2>Step 2</h2>
-        <h4>This is the Tracking-Script. It should be placed on the Checkoutpage e.g. the last Page that confirms the order.</h4>
-    </div>
-    
+
     <form th:action="@{/template/generate}" method="post" class="mt-4">
         <input type="hidden" name="content" th:value="${content}">
         <input type="hidden" name="description" th:value="${description}">
