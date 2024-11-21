@@ -113,28 +113,32 @@ public class TemplateController {
             @RequestParam String cid,
             @RequestParam String id,
             @RequestParam(required = false) String amount,
+            @RequestParam(required = false) String track_id, // Optionaler Parameter
             @RequestParam String description,
             @RequestParam String selectedTemplate,
             Model model) {
 
-        // Generierung basierend auf `content`, aber `content` bleibt unverändert
+        // Vermeidung von Nullwerten und sicherstellen, dass Platzhalter korrekt ersetzt werden
         String generatedContent = content.replace("{eid}", eid)
+                .replace("{track_id}", track_id != null ? track_id : "")
                 .replace("{cid}", cid)
                 .replace("{id}", id)
                 .replace("{amount}", amount != null ? amount : "");
 
-        // Original und generierten Inhalt ins Model legen
-        model.addAttribute("content", content); // Original bleibt erhalten
+        // Daten ins Model legen
+        model.addAttribute("content", content); // Originalinhalt bleibt erhalten
         model.addAttribute("generatedContent", generatedContent); // Generierte Ausgabe
         model.addAttribute("eid", eid);
         model.addAttribute("cid", cid);
         model.addAttribute("id", id);
-        model.addAttribute("amount", amount);
+        model.addAttribute("amount", amount != null ? amount : "");
+        model.addAttribute("track_id", track_id != null ? track_id : ""); // track_id hinzufügen
         model.addAttribute("description", description);
         model.addAttribute("selectedTemplate", selectedTemplate);
 
         return "templateContent";
     }
+
 
     // Template-spezifischen Inhalt in einem Iframe laden
     @PostMapping("/loadContent")

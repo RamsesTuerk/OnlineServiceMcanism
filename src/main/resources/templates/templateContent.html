@@ -55,16 +55,17 @@
     <div class="mt-4">
         <h2>Description:</h2>
         <p th:utext="${description}" style="text-align: left;"></p> <!-- Hier wird die Beschreibung angezeigt -->
-        <br>
-        <br>
-        <br>
     </div>
 
 
-    <div th:if="${selectedTemplate != null and !selectedTemplate.contains('postback')}">
+    <div th:if="${selectedTemplate != null and !selectedTemplate.contains('Postback')}">
+        <br>
+        <br>
+        <br>
         <div>
             <h2>Step 1</h2>
-            <h4>This Init Script has to be placed on every side except the Checkout Page. No changes needed!</h4>
+            <h4>This init.script must be placed on every page except the checkout page.
+                No modifications are needed!</h4>
         </div>
         <div class="mt-4 textarea-container">
             <h2>Init Script:</h2>
@@ -84,10 +85,10 @@
     <form th:action="@{/template/generate}" method="post" class="mt-4">
         <input type="hidden" name="content" th:value="${content}">
         <input type="hidden" name="description" th:value="${description}">
-        <input type="hidden" name="selectedTemplate" value="${selectedTemplate}">
+        <input type="hidden" name="selectedTemplate" th:value="${selectedTemplate}">
 
         <div class="form-group">
-            <label for="eid">EID:</label>@PostMapping("/template/generate")
+            <label for="eid">EID:</label>
             <input type="text" id="eid" name="eid" th:value="${eid}" required class="form-control"/>
         </div>
         <div class="form-group">
@@ -101,6 +102,11 @@
         <div class="form-group">
             <label for="id">ID:</label>
             <input type="text" id="id" name="id" th:value="${id}" required class="form-control"/>
+        </div>
+        <div th:if="${selectedTemplate != null and selectedTemplate.contains('Postback')}">
+            <label for="track_id">Track ID</label>
+            <input type="text" id="track_id" name="track_id" th:value="${track_id}" required class="form-control"/>
+            <br>
         </div>
 
         <button type="submit" class="btn btn-primary">Generate</button>
