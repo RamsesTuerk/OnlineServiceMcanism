@@ -58,7 +58,7 @@ public class SecurityConfig {
         Map<String, String> users = new HashMap<>();
         //lokales Testen: src/main/resources/users.txt
         //server pfad: /opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt
-        try (BufferedReader br = new BufferedReader(new FileReader("/opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(":"); // Annahme: Benutzername und Passwort sind durch ":" getrennt

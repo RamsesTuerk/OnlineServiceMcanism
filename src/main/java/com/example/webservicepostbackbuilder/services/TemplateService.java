@@ -27,23 +27,7 @@ public class TemplateService {
      * @param template Das zu speichernde Template.
      */
     public void saveTemplate(Template template) {
-        // Überprüfen, ob die ID der Vorlage gesetzt ist
-        if (template.getId() != null) {
-            // Vorhandenes Template aktualisieren
-            Template existingTemplate = templateRepository.findById(template.getId())
-                    .orElseThrow(() -> new RuntimeException("Template nicht gefunden"));
-            existingTemplate.setName(template.getName());
-            existingTemplate.setDescription(template.getDescription());
-            existingTemplate.setSaleContent(template.getSaleContent());
-            existingTemplate.setLeadContent(template.getLeadContent());
-            existingTemplate.setInstallContent(template.getInstallContent());
-            existingTemplate.setAmountPlaceholder(template.getAmountPlaceholder());
-            existingTemplate.setIdPlaceholder(template.getIdPlaceholder());
-            templateRepository.save(existingTemplate);
-        } else {
-            // Neues Template speichern
-            templateRepository.save(template);
-        }
+        templateRepository.save(template);
     }
 
     /**
