@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Generator</title>
+    <title>MCANISM Support Center</title>
     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 <div class="container mt-5 flex-grow-1">
-    <img src="/images/Logo.png" style="width: 50px; height: auto; text-align: left; margin-left: 10px">
+    <img src="/images/Logo.png" style="width: 50px; height: auto; text-align: left; margin-left: 10px" alt="Logo">
     <h1 class="container mt-4">
         MCANISM Script Generator
     </h1>
@@ -129,7 +129,7 @@
             Data Protection & Cookie Notice Chefscampaing German
         </h1>
         <br>
-        <textarea
+        <label for="cookieText"></label><textarea
                 rows="14"
                 id="cookieText"
                 th:text="|Chefscampaign.com Performance Marketing für Restaurants

@@ -75,14 +75,4 @@ public class TemplateService {
         templateRepository.deleteById(id);
     }
 
-    /**
-     * Gibt ein Template anhand des Namens zurück.
-     *
-     * @param name Der Name des gesuchten Templates.
-     * @return Das gefundene Template.
-     */
-    public Template getTemplateByName(String name) {
-        return templateRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("Template nicht gefunden mit Namen: " + name));
-    }
 }
