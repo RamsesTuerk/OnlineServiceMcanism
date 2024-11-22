@@ -14,61 +14,70 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-@EnableWebSecurity
+@Configuration // Diese Annotation markiert die Klasse als eine Konfigurationsklasse für Spring
+@EnableWebSecurity // Aktiviert die Web-Sicherheitskonfiguration für die Anwendung
 public class SecurityConfig {
 
+    // Bean für die Sicherheitskonfiguration der HTTP-Anfragen
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Hier wird festgelegt, wie HTTP-Anfragen autorisiert werden
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/template/generate", "/upload").permitAll() // Zugang ohne Authentifizierung
-                        .requestMatchers("/template", "/templates").authenticated() // Zugang mit Authentifizierung
-                        .anyRequest().permitAll() // Alle anderen Anfragen erlauben
+                        // Zugriffsrechte für bestimmte Endpunkte festlegen
+                        .requestMatchers("/template/generate", "/upload").permitAll() // Diese Endpunkte sind öffentlich zugänglich, d.h. ohne Authentifizierung
+                        .requestMatchers("/template", "/templates").authenticated() // Diese Endpunkte erfordern eine Authentifizierung
+                        .anyRequest().permitAll() // Alle anderen Anfragen werden ohne Authentifizierung zugelassen
                 )
-                 // CSRF deaktivieren, falls nicht benötigt
+                // Falls CSRF nicht benötigt wird, wird es hier deaktiviert
                 .formLogin(form -> form
-                        .loginPage("/login") // Anmeldeseite
-                        .permitAll()
+                        .loginPage("/login") // Die Anmeldeseite wird unter "/login" erwartet
+                        .permitAll() // Die Anmeldeseite ist öffentlich zugänglich, d.h. jeder kann sich einloggen
                 )
+                // Konfiguration für das Logout
                 .logout(logout -> logout
-                        .permitAll()
+                        .permitAll() // Der Logout ist für alle Benutzer zugänglich
                 );
 
-        return http.build();
+        return http.build(); // Gibt die konfigurierte Sicherheitsfilterkette zurück
     }
 
-
+    // Bean für den UserDetailsService, der die Benutzerinformationen verwaltet
     @Bean
     public UserDetailsService userDetailsService() throws Exception {
-        Map<String, String> users = loadUsersFromFile();
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        Map<String, String> users = loadUsersFromFile(); // Lädt die Benutzer aus einer Datei
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(); // Der InMemoryUserDetailsManager verwaltet die Benutzer im Speicher
 
+        // Für jeden Benutzer in der geladenen Map wird ein Benutzerobjekt erstellt
         for (Map.Entry<String, String> entry : users.entrySet()) {
-            manager.createUser(org.springframework.security.core.userdetails.User.withUsername(entry.getKey())
-                    .password("{noop}" + entry.getValue()) // {noop} bedeutet kein Passwort-Encoder
-                    .roles("USER")
-                    .build());
+            manager.createUser(org.springframework.security.core.userdetails.User.withUsername(entry.getKey()) // Benutzername setzen
+                    .password("{noop}" + entry.getValue()) // Passwort setzen (kein Passwort-Encoder wird verwendet, daher {noop})
+                    .roles("USER") // Der Benutzer bekommt die Rolle "USER"
+                    .build()); // Der Benutzer wird erstellt und zum Manager hinzugefügt
         }
 
-        return manager;
+        return manager; // Gibt den UserDetailsService zurück
     }
 
+    // Diese Methode lädt die Benutzerdaten aus einer Datei
     private Map<String, String> loadUsersFromFile() {
-        Map<String, String> users = new HashMap<>();
-        //lokales Testen: src/main/resources/users.txt
-        //server pfad: /opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt
+        Map<String, String> users = new HashMap<>(); // Eine Map, um Benutzername und Passwort zu speichern
+        // Hier wird der Pfad zur Datei angegeben, die die Benutzerdaten enthält
+        // Für lokale Tests: src/main/resources/users.txt
+        // Für den Server: /opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.txt"))) {
             String line;
+            // Jede Zeile in der Datei wird eingelesen
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":"); // Annahme: Benutzername und Passwort sind durch ":" getrennt
-                if (parts.length == 2) {
-                    users.put(parts[0], parts[1]);
+                // Die Zeile wird bei ":" getrennt, wobei der Teil vor dem ":" der Benutzername ist und der Teil nach dem ":" das Passwort
+                String[] parts = line.split(":");
+                if (parts.length == 2) { // Falls die Zeile korrekt formatiert ist
+                    users.put(parts[0], parts[1]); // Benutzername und Passwort werden in die Map eingefügt
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Fehlerbehandlung im Falle eines IO-Problems beim Lesen der Datei
         }
-        return users;
+        return users; // Gibt die Map mit den Benutzern zurück
     }
 }

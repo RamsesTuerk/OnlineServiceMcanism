@@ -7,37 +7,47 @@ import jakarta.persistence.Id;
 
 /**
  * Repräsentiert ein Template-Objekt in der Datenbank.
+ * Diese Klasse wird verwendet, um Template-Daten zu speichern und abzurufen,
+ * die später in der Anwendung verwendet werden, um dynamische Inhalte zu generieren.
  */
 @Entity
 public class Template {
 
     // Eindeutige ID des Templates (Primärschlüssel).
+    // Die ID wird automatisch von der Datenbank generiert.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Name des Templates.
+    // Der Name des Templates. Dies könnte z.B. "Sale", "Lead" oder "Install" sein.
     private String name;
 
-    // Inhalt für den "Sale"-Typ.
+    // Der Inhalt des Templates für den "Sale"-Typ.
+    // Dies ist der Text, der angezeigt wird, wenn das Template für einen Verkauf verwendet wird.
     private String saleContent;
 
-    // Inhalt für den "Lead"-Typ.
+    // Der Inhalt des Templates für den "Lead"-Typ.
+    // Dies ist der Text, der angezeigt wird, wenn das Template für einen Lead verwendet wird.
     private String leadContent;
 
-    // Inhalt für den "Install"-Typ.
+    // Der Inhalt des Templates für den "Install"-Typ.
+    // Dies ist der Text, der angezeigt wird, wenn das Template für eine Installation verwendet wird.
     private String installContent;
 
     // Platzhalter für den Betrag im Template.
+    // Dieser Platzhalter wird durch einen tatsächlichen Betrag ersetzt, wenn das Template gerendert wird.
     private String amountPlaceholder;
 
     // Platzhalter für die ID im Template.
+    // Dieser Platzhalter wird durch eine tatsächliche ID ersetzt, wenn das Template gerendert wird.
     private String idPlaceholder;
 
-    // Beschreibung des Templates.
+    // Eine Beschreibung des Templates.
+    // Dies könnte zusätzliche Informationen zum Template oder Hinweise zur Verwendung enthalten.
     private String description;
 
-    // Standard-Konstruktor (erforderlich für JPA).
+    // Standard-Konstruktor (erforderlich für JPA, um Instanzen der Klasse zu erstellen).
+    // Dieser Konstruktor wird von JPA verwendet, um neue Objekte aus der Datenbank zu laden.
     public Template() {}
 
     /**
@@ -61,66 +71,82 @@ public class Template {
 
     // Getter und Setter für die Eigenschaften.
 
+    // Gibt die ID des Templates zurück.
     public Long getId() {
         return id;
     }
 
+    // Setzt die ID des Templates.
     public void setId(Long id) {
         this.id = id;
     }
 
+    // Gibt den Namen des Templates zurück.
     public String getName() {
         return name;
     }
 
+    // Setzt den Namen des Templates.
     public void setName(String name) {
         this.name = name;
     }
 
+    // Gibt den Inhalt des "Sale"-Templates zurück.
     public String getSaleContent() {
         return saleContent;
     }
 
+    // Setzt den Inhalt des "Sale"-Templates.
     public void setSaleContent(String saleContent) {
         this.saleContent = saleContent;
     }
 
+    // Gibt den Inhalt des "Lead"-Templates zurück.
     public String getLeadContent() {
         return leadContent;
     }
 
+    // Setzt den Inhalt des "Lead"-Templates.
     public void setLeadContent(String leadContent) {
         this.leadContent = leadContent;
     }
 
+    // Gibt den Inhalt des "Install"-Templates zurück.
     public String getInstallContent() {
         return installContent;
     }
 
+    // Setzt den Inhalt des "Install"-Templates.
     public void setInstallContent(String installContent) {
         this.installContent = installContent;
     }
 
+    // Gibt den Platzhalter für den Betrag zurück.
     public String getAmountPlaceholder() {
         return amountPlaceholder;
     }
 
+    // Setzt den Platzhalter für den Betrag.
     public void setAmountPlaceholder(String amountPlaceholder) {
         this.amountPlaceholder = amountPlaceholder;
     }
 
+    // Gibt den Platzhalter für die ID zurück.
     public String getIdPlaceholder() {
         return idPlaceholder;
     }
 
+    // Setzt den Platzhalter für die ID.
     public void setIdPlaceholder(String idPlaceholder) {
         this.idPlaceholder = idPlaceholder;
     }
 
+    // Gibt die Beschreibung des Templates zurück.
     public String getDescription() {
         return description;
     }
 
+    // Setzt die Beschreibung des Templates.
     public void setDescription(String description) {
         this.description = description;
     }
