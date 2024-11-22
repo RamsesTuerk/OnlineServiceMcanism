@@ -1,0 +1,37 @@
+.textarea-container {
+    position: relative;
+}
+
+.copy-button {
+    position: absolute;
+    top: 5px; /* Abstand vom oberen Rand */
+    right: 0px; /* Abstand vom rechten Rand */
+    z-index: 1; /* Damit der Button über dem Textfeld bleibt */
+}
+
+body {
+    font-family: 'Lato', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, button, textarea, select, input {
+    font-family: 'Lato', sans-serif !important;
+}
+
+body h1 {
+    color: #33B3D1 !important;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #33B3D1;
+    border-color: #33B3D1;
+}
+
+.btn-primary:hover {
+    background-color: #2a8ba7;
+    border-color: #2a8ba7;
+}
+h6 {
+    color: #b3b3b3; /* Helles Grau */
+    text-align: right;
+}
