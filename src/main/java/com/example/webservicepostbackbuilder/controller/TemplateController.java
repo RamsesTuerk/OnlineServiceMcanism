@@ -113,6 +113,7 @@ public class TemplateController {
             @RequestParam String id,
             @RequestParam(required = false) String amount,
             @RequestParam(required = false) String track_id, // Optionaler Parameter
+            @RequestParam(required = false) String shop_id,
             @RequestParam String description,
             @RequestParam String selectedTemplate,
             Model model) {
@@ -122,7 +123,8 @@ public class TemplateController {
                 .replace("{track_id}", track_id != null ? track_id : "")
                 .replace("{cid}", cid)
                 .replace("{id}", id)
-                .replace("{amount}", amount != null ? amount : "");
+                .replace("{amount}", amount != null ? amount : "")
+                .replace("{shop_id}", shop_id != null ? shop_id : "");
 
         // Daten ins Model legen, um sie an die View weiterzugeben
         model.addAttribute("content", content); // Originalinhalt bleibt erhalten
@@ -131,6 +133,7 @@ public class TemplateController {
         model.addAttribute("cid", cid);
         model.addAttribute("id", id);
         model.addAttribute("amount", amount != null ? amount : "");
+        model.addAttribute("shop_id", shop_id != null ? shop_id : "");
         model.addAttribute("track_id", track_id != null ? track_id : ""); // track_id hinzufügen
         model.addAttribute("description", description);
         model.addAttribute("selectedTemplate", selectedTemplate);
