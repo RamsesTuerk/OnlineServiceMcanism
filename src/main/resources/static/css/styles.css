@@ -35,3 +35,17 @@ h6 {
     color: #b3b3b3; /* Helles Grau */
     text-align: right;
 }
+
+.scnHeader {
+    text-align: center;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body > div {
+    flex: 1; /* Dehnt den Hauptinhalt aus, sodass der Footer unten bleibt */
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCANISM Support Center</title>
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/scripts.js" defer></script>
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+<div class="container mt-5 flex-grow-1">
+    <img src="/images/Logo.png" style="width: 50px; height: auto; text-align: left; margin-left: 10px" alt="Logo">
+    <h1 class="container mt-4">
+        MCANISM Script Generator
+    </h1>
+    <form th:action="@{/loadContent}" method="post" id="templateIframe" class="mt-4">
+        <div class="form-group">
+            <label for="templateSelect">Integreation method</label>
+            <select id="templateSelect" name="id" class="form-control" onchange="loadTemplateOptions()" required>
+                <option value="" disabled selected>Please select a integration method</option>
+                <th:block th:each="template : ${templates}">
+                    <option th:value="${template.id}" th:text="${template.name}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="saleType">Script Typ:</label>
+            <select id="saleType" name="saleType" class="form-control" required>
+                <option value="" disabled selected>Please select a integration method</option>
+            </select>
+        </div>
+        <input type="hidden" name="eid" th:value="${param.eid}"/>
+        <input type="hidden" name="cid" th:value="${param.cid}"/>
+        <button type="submit" class="btn btn-primary">Anzeigen</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div>
+        <h1 class="container mt-4">
+            Data Protection & Cookie Notice Chefscampaing German
+        </h1>
+        <br>
+        <label for="cookieText"></label><textarea
+                rows="14"
+                id="cookieText"
+                th:text="|Chefscampaign.com Performance Marketing für Restaurants
+Dieses Produkt wird betrieben von der Firma:
+MCANISM Technology GmbH - Cremon 11 - 20457 Hamburg - Deutschland
+
+Ziel: Zurverfügungstellung des Onlineangebotes, seiner Funktionen und Inhalte. Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern. Sicherheitsmaßnahmen. Reichweitenmessung/Marketing.
+
+Chefs Campaign/MCANISM Technology GmbH und der Publisher sind gemeinsam für die Datenverarbeitung im Zusammenhang mit dem Partnerprogramm verantwortlich. Die ihnen gemeinsam obliegenden Verpflichtungen wurden in einer Vereinbarung über gemeinsame Verarbeitung festgehalten. Laut dieser Vereinbarung können Sie sich mit Ihren datenschutzrechtlichen Anliegen an beide Verantwortlichen wenden. Der jeweils zuerst angesprochene Verantwortliche wird Ihre Anfrage beantworten. Jeder Verantwortliche hält eigenständig Datenschutzinformationen nach Art. 13, 14 und 26 DSGVO vor und trifft die erforderlichen Maßnahmen zum Schutz personenbezogener Daten und zur Einhaltung der übrigen DSGVO-Vorschriften in seinem Unternehmen. Der Vertrag über gemeinsame Verarbeitung und weitere Informationen zum Datenschutz bei MCANISM sind auf Anfrage beim Unternehmen oder über dessen Webseite einsehbar. https://www.mcanism.com/privacy-policy &amp; https://www.mcanism.com/datenschutz|"
+                readonly class="form-control w-100">
+</textarea>
+        <br>
+        <button type="button" class="btn btn-secondary" onclick="copyToClipboard('cookieText')">Kopieren
+        </button>
+
+    </div>
+    <br>
+    <br>
+    <h6>https://Mekanism.de?eid=xxxxxx&cid=xxxxxx</h6>
+</div>
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2025 <a href="https://www.mcanism.com" class="text-white"
+                      target="_blank">mcanism.com</a> | <a href="https://www.mcanism.com/imprint" class="text-white"
+                                    target="_blank">Imprint</a></p>
+</footer>
+</body>
+</html>

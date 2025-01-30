@@ -28,8 +28,23 @@ public class TemplateController {
         this.templateService = templateService;
     }
 
-    // Landingpage mit der Liste aller Templates und optionaler EID und CID
     @GetMapping("/")
+    public String landingPage(){
+     return "landingPage";
+    }
+
+    @GetMapping("/advertiser")
+    public String advertiserLandingPage(){
+        return "advertiserLandingPage";
+    }
+
+    @GetMapping("/publisher")
+    public String publisherLandingPage(){
+        return "publisherLandingPage";
+    }
+
+    // Landingpage mit der Liste aller Templates und optionaler EID und CID
+    @GetMapping("/scriptGenerator")
     public String index(@RequestParam(required = false) String eid,
                         @RequestParam(required = false) String cid,
                         Model model) {
@@ -38,7 +53,7 @@ public class TemplateController {
         // EID und CID werden optional als Parameter mitgegeben und ins Model gelegt
         model.addAttribute("eid", eid != null ? eid : "");
         model.addAttribute("cid", cid != null ? cid : "");
-        return "landingPage";  // Rückgabe der View "landingPage"
+        return "scriptGenerator";  // Rückgabe der View "landingPage"
     }
 
     // Formular zur Erstellung oder Bearbeitung eines Templates
