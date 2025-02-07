@@ -1,5 +1,6 @@
 package com.example.webservicepostbackbuilder.controller;
 
+import com.example.webservicepostbackbuilder.repository.Campaign;
 import com.example.webservicepostbackbuilder.repository.Template;
 import com.example.webservicepostbackbuilder.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class TemplateController {
 
     @GetMapping("/")
     public String landingPage(){
-     return "landingPage";
+        return "landingPage";
     }
 
     @GetMapping("/advertiser")
@@ -41,6 +42,7 @@ public class TemplateController {
     @GetMapping("/publisher")
     public String publisherLandingPage(){
         return "publisherLandingPage";
+
     }
 
     // Landingpage mit der Liste aller Templates und optionaler EID und CID
