@@ -26,5 +26,6 @@ class CampaignTest {
 
         // Ausgabe von Informationen zur Überprüfung
         System.out.println("Campaign initialized successfully with eids: " + campaign.getEids());
+        System.out.println(campaign.getTestLink() + " - " + campaign.getCampaignName() + " - " + campaign.getCampaignLogoURL());
     }
 }
