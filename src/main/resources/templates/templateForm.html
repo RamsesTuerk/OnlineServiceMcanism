@@ -21,8 +21,13 @@
 
         <div class="form-group">
             <div>
-            <label for="description">Beschreibung</label>
-            <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
+                <label for="orderId">Order ID</label>
+                <textarea id="orderId" th:field="*{orderid}" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div>
+                <label for="description">Beschreibung</label>
+                <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
             </div>
 
             <div class="form-group">
@@ -67,7 +72,7 @@
     <div th:if="${message}" class="alert alert-info mt-3" th:text="${message}"></div>
 </div>
 <footer class="bg-dark text-white text-center py-3 mt-5">
-    <p>&copy; 2024 <a href="https://www.mcanism.com" class="text-white"
+    <p>&copy; 2025 <a href="https://www.mcanism.com" class="text-white"
                       target="_blank">mcanism.com</a> | <a href="https://www.mcanism.com/imprint" class="text-white"
                                                            target="_blank">Imprint</a></p>
 </footer>

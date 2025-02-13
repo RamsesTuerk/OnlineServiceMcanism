@@ -15,7 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class TemplateController {
@@ -34,7 +37,12 @@ public class TemplateController {
                         @RequestParam(required = false) String cid,
                         Model model) {
         // Alle Templates werden aus der TemplateService geladen
-        model.addAttribute("templates", templateService.getAllTemplates());
+        List<Template> templates = templateService.getAllTemplates()
+                .stream()
+                .sorted(Comparator.comparing(Template::getOrderid)) // Sortierung nach orderid
+                .collect(Collectors.toList());
+        // Alle Templates werden ins Model geladen
+        model.addAttribute("templates", templates);
         // EID und CID werden optional als Parameter mitgegeben und ins Model gelegt
         model.addAttribute("eid", eid != null ? eid : "");
         model.addAttribute("cid", cid != null ? cid : "");
@@ -60,8 +68,13 @@ public class TemplateController {
     // Auflistung aller Templates
     @GetMapping("/templates")
     public String listTemplates(Model model) {
+
+        List<Template> templates = templateService.getAllTemplates()
+                .stream()
+                .sorted(Comparator.comparing(Template::getOrderid)) // Sortierung nach orderid
+                .collect(Collectors.toList());
         // Alle Templates werden ins Model geladen
-        model.addAttribute("templates", templateService.getAllTemplates());
+        model.addAttribute("templates", templates);
         return "templateList";  // Rückgabe der View, die die Liste der Templates anzeigt
     }
 
