@@ -65,7 +65,7 @@ public class SecurityConfig {
         // Hier wird der Pfad zur Datei angegeben, die die Benutzerdaten enthält
         // Für lokale Tests: src/main/resources/users.txt
         // Für den Server: /opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("/opt/tomcat/webapps/ROOT/WEB-INF/classes/users.txt"))) {
             String line;
             // Jede Zeile in der Datei wird eingelesen
             while ((line = br.readLine()) != null) {
