@@ -17,6 +17,7 @@
         <thead class="thead-dark">
         <tr>
             <th>Name</th>
+            <th>Order Id</th>
             <th>Beschreibung</th> <!-- Neue Spalte für die Beschreibung -->
             <th>Sale Content</th>
             <th>Lead Content</th>
@@ -31,6 +32,7 @@
             <td>
                 <a th:href="@{/template/edit/{id}(id=${template.id})}" th:text="${template.name}"></a>
             </td>
+            <td th:text="${template.orderid}"></td>
             <td th:text="${template.description}"></td> <!-- Beschreibung hinzufügen -->
             <td th:text="${template.saleContent}"></td>
             <td th:text="${template.leadContent}"></td>

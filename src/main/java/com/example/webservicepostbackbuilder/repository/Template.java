@@ -1,9 +1,8 @@
 package com.example.webservicepostbackbuilder.repository;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+
 
 /**
  * Repräsentiert ein Template-Objekt in der Datenbank.
@@ -46,6 +45,9 @@ public class Template {
     // Dies könnte zusätzliche Informationen zum Template oder Hinweise zur Verwendung enthalten.
     private String description;
 
+    @Column(nullable = true)
+    private int orderId;
+
     // Standard-Konstruktor (erforderlich für JPA, um Instanzen der Klasse zu erstellen).
     // Dieser Konstruktor wird von JPA verwendet, um neue Objekte aus der Datenbank zu laden.
     public Template() {}
@@ -59,14 +61,16 @@ public class Template {
      * @param installContent Inhalt für den "Install"-Typ.
      * @param amountPlaceholder Platzhalter für den Betrag.
      * @param idPlaceholder Platzhalter für die ID.
+     * @param orderId Platzhalter für die ID zum ordnen .
      */
-    public Template(String name, String saleContent, String leadContent, String installContent, String amountPlaceholder, String idPlaceholder) {
+    public Template(String name, String saleContent, String leadContent, String installContent, String amountPlaceholder, String idPlaceholder, int orderId) {
         this.name = name;
         this.saleContent = saleContent;
         this.leadContent = leadContent;
         this.installContent = installContent;
         this.amountPlaceholder = amountPlaceholder;
         this.idPlaceholder = idPlaceholder;
+        this.orderId = orderId;
     }
 
     // Getter und Setter für die Eigenschaften.
@@ -149,5 +153,13 @@ public class Template {
     // Setzt die Beschreibung des Templates.
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getOrderid() {
+        return orderId;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderId = orderid;
     }
 }

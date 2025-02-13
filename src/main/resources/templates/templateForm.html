@@ -21,6 +21,11 @@
 
         <div class="form-group">
             <div>
+                <label for="orderId">Order ID</label>
+                <textarea id="orderId" th:field="*{orderid}" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div>
             <label for="description">Beschreibung</label>
             <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
             </div>

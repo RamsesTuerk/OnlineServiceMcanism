@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="templateSelect">Integreation method</label>
             <select id="templateSelect" name="id" class="form-control" onchange="loadTemplateOptions()" required>
-                <option value="" disabled selected>Please select a integration method</option>
+                <option value="" disabled selected>Please select an integration method</option>
                 <th:block th:each="template : ${templates}">
                     <option th:value="${template.id}" th:text="${template.name}"></option>
                 </th:block>

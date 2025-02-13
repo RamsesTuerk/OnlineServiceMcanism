@@ -54,3 +54,4 @@ function copyToClipboard(id) {
     copyText.select(); // Wählt den Text im Textfeld aus
     document.execCommand("copy"); // Kopiert den ausgewählten Text in die Zwischenablage
 }
+
