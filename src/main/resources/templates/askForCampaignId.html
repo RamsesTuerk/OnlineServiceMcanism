@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign ID</title>
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/scripts.js" defer></script>
+</head>
+<body>
+<div>
+    <form th:action="@{/campaignInitialize}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="campaignId">Amount:</label>
+            <input type="text" id="campaignId" name="campaignId" th:value="${campaignId}"  class="form-control"/>
+        </div>
+    </form>
+</div>
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2025 <a href="https://www.mcanism.com" class="text-white"
+                      target="_blank">mcanism.com</a> | <a href="https://www.mcanism.com/imprint" class="text-white"
+                                                           target="_blank">Imprint</a></p>
+</footer>
+</body>
+</html>
