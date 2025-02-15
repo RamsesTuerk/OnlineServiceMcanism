@@ -38,10 +38,15 @@ public class BaseConverter {
         boolean neg = number < 0;
         String numStr = String.valueOf(Math.abs(number));
         String value = convert(numStr, DECIMAL_DIGITS, digits);
+
+        // Auffüllen auf 6 Stellen mit führenden Nullen
+        value = String.format("%6s", value).replace(' ', '0');
+
         return neg ? sign + value : value;
     }
 
     public int decode(String number) {
+        number = number.replaceFirst("^0+", "");
         boolean neg = number.charAt(0) == sign;
         if (neg) {
             number = number.substring(1);
