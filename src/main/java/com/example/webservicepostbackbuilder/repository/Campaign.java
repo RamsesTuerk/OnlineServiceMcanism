@@ -4,27 +4,40 @@ import com.example.webservicepostbackbuilder.services.BaseConverter;
 import com.example.webservicepostbackbuilder.services.ApiClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
+@Entity
 public class Campaign {
 
-    private String sid;
+    @Id
     private int numericId;
+
+    private String sid;
 
     private String testLink;
 
     private String campaignName;
 
+    @Column(name = "campaign_logourl", length = 1024)
     private String campaignLogoURL;
 
-    private HashMap<String, String> eids = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "campaign_eids", joinColumns = @JoinColumn(name = "campaign_id"))
+    @MapKeyColumn(name = "eid_key")
+    @Column(name = "eid_value")
+    private Map<String, String> eids = new HashMap<>();
+
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public Campaign(){
+    public Campaign(){}
 
-        this.sid = "5h";
+    public Campaign(String sid){
+
+        this.sid = sid;
         BaseConverter converter = new BaseConverter();
         this.numericId = converter.decode(this.sid);
 
@@ -88,7 +101,7 @@ public class Campaign {
         return campaignName;
     }
 
-    public HashMap<String, String> getEids() {
+    public Map<String, String> getEids() {
         return eids;
     }
 

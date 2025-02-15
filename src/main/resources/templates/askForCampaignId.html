@@ -10,14 +10,38 @@
     <script src="/js/scripts.js" defer></script>
 </head>
 <body>
-<div>
-    <form th:action="@{/campaignInitialize}" method="post" class="mt-4">
+<div class="container mt-5">
+    <h2>Campaign Details</h2>
+    <form th:action="@{/campaign}" method="get">
         <div class="form-group">
-            <label for="campaignId">Amount:</label>
-            <input type="text" id="campaignId" name="campaignId" th:value="${campaignId}"  class="form-control"/>
+            <label for="campaignId">Campaign ID</label>
+            <input type="text" id="campaignId" name="campaignId" class="form-control" required>
         </div>
+        <button type="submit" class="btn btn-primary">Suchen</button>
     </form>
+
+    <!-- Anzeige der Kampagnen-Informationen, falls vorhanden -->
+    <div th:if="${campaign}" class="mt-4 p-3 border rounded">
+        <h4>Kampagnendetails</h4>
+        <p><strong>ID:</strong> <span th:text="${campaign.numericId}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${campaign.campaignName}"></span></p>
+        <p><strong>Testlink:</strong> <a th:href="${campaign.testLink}" target="_blank" th:text="${campaign.testLink}"></a></p>
+        <p><strong>Logo:</strong> <img th:src="${campaign.campaignLogoURL}" alt="Campaign Logo" class="img-fluid" style="max-width: 150px;"></p>
+
+        <h5>EIDs:</h5>
+        <ul>
+            <li th:each="entry : ${campaign.eids}">
+                <strong th:text="${entry.key}"></strong>: <span th:text="${entry.value}"></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Fehlernachricht, falls keine Kampagne gefunden wurde -->
+    <div th:if="${error}" class="alert alert-danger mt-3">
+        <p th:text="${error}"></p>
+    </div>
 </div>
+
 <footer class="bg-dark text-white text-center py-3 mt-5">
     <p>&copy; 2025 <a href="https://www.mcanism.com" class="text-white"
                       target="_blank">mcanism.com</a> | <a href="https://www.mcanism.com/imprint" class="text-white"
